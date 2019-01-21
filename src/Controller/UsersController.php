@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+<<<<<<< HEAD
 
 use App\Controller\SubjectsController;
 
@@ -16,6 +17,10 @@ use App\Model\Entity\Sessions;
 
 
 
+=======
+use App\Controller\SubjectsController;
+
+>>>>>>> Marie
 class UsersController extends AppController
 {
 
@@ -38,7 +43,9 @@ class UsersController extends AppController
                 $bool = true;
             }
             if($bool){
+
                 foreach($query as $user){
+                    $this->getRequest()->getSession()->write('id',$user->id);
                     if($user->idRole==1){
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
@@ -69,7 +76,12 @@ class UsersController extends AppController
     }
 
     public function affichageEtu(){
+        $users=$this->Users->find();
+        $subjects=$this->Users->Groups->Subjects->find()->all();
 
+        foreach ($subjects as $subject){
+
+<<<<<<< HEAD
         $users=$this->Users->find();
 
         $subjects=$this->Users->Groups->Subjects->find()->all();
@@ -77,12 +89,15 @@ class UsersController extends AppController
         foreach ($subjects as $subject){
 
 
+=======
+>>>>>>> Marie
 
             $query = $this->Users
                 ->find()
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
+<<<<<<< HEAD
 
 
             dd($query);
@@ -97,11 +112,23 @@ class UsersController extends AppController
 
 
         dd('coucou Etu');
+=======
+>>>>>>> Marie
 
 
+            foreach($query as $q){
+
+                $subject->Enseignant = $q->lastname . " " . $q->firstname;
+
+            }
+
+        }
+
+        $this->set(compact('users', 'subjects'));
     }
 
     public function affichageEns(){
+<<<<<<< HEAD
 
         //dd('coucou Ens');
 
@@ -111,6 +138,35 @@ class UsersController extends AppController
         dd('coucou Ens');
 
 //My name is !Yaaaaaaa
+=======
+        dd('coucou Ens');
+
+    }
+
+
+    public function choisirSubject()
+    {
+        $id2 = $this->getRequest()->getSession()->read('id');
+
+
+
+        $arraysubjects=array();
+        $users=$this->Users->get($id2);
+
+        $subjects=$this->Users->Subjects->get($this->getRequest()->getData('id'));
+        array_push($arraysubjects,$subjects);
+
+
+
+
+        $users->subjects=$arraysubjects;
+
+
+        $this->Users->save($users);
+
+        $this->Flash->success('Choix bien enregistré');
+        return $this->redirect('/Users/affichageEtu');
+>>>>>>> Marie
 
     }
 }

@@ -17,10 +17,15 @@ class SubjectsTable extends Table
         parent::initialize($config);
         $this->hasOne('Groups');
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->hasMany('Sessions');
         $this->belongsToMany('Users');
 =======
 >>>>>>> Yanis
 
+=======
+        $this->belongsToMany('Users');
+        $this->belongsToMany('Tags');
+>>>>>>> Marie
     }
 }

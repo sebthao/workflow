@@ -6,7 +6,7 @@
  * Time: 17:31
  */
 
-namespace App\Controller\Component;
+namespace App\Controller;
 
 
 class RolesController extends AppController
