@@ -9,6 +9,8 @@
 namespace App\Controller;
 
 
+use App\Controller\SubjectsController;
+
 class UsersController extends AppController
 {
 
@@ -60,16 +62,56 @@ class UsersController extends AppController
     }
 
     public function affichageEtu(){
+        $users=$this->Users->find();
 
-        dd('coucou Etu');
+        $subjects=$this->Users->Groups->Subjects->find()->all();
+
+        foreach ($subjects as $subject){
+
+
+            $query = $this->Users
+                ->find()
+                ->select(['lastname', 'firstname'])
+                ->where(['id =' => $subject->idUserMentor])
+                ->all();
+
+
+            dd($query);
+            $subject->Enseignant = $query->lastaname . " " . $query->firstname;
+            dd($subject);
+        }
+
+
+
+
+
+
+        $this->set(compact('users', 'subjects'));
 
 
     }
 
     public function affichageEns(){
+        dd($this->Users->Sessions->find()->all());
+        $subjects=$this->Users->Groups->Subjects->find()->all();
+        $sessions=$this->Users->Sessions->find()->all();
+        foreach ($subjects as $subject){
+            $query = $this->Users
+                ->find()
+                ->select(['firstName', 'lastName'])
+                ->all();
 
-        dd('coucou Ens');
+            //$subject
 
+
+        }
+
+        //dd('coucou Ens');
+
+
+    }
+
+    public function soumissionEns(){
 
     }
 }

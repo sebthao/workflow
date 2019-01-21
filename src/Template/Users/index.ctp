@@ -4,3 +4,4 @@
     echo $this->Form->control('password',['label' => 'Mot de passe']);
     echo $this->Form->button('Valider');
     echo $this->Form->end();
+

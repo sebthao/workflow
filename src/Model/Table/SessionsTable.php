@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: p1601402
- * Date: 19/12/2018
- * Time: 17:37
+ * User: p1700788
+ * Date: 16/01/2019
+ * Time: 16:05
  */
 
 namespace App\Model\Table;
@@ -11,11 +11,11 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class RolesTable extends Table
+class SessionsTable
 {
     public function initialize(array $config){
         parent::initialize($config);
-        $this->hasMany('Users');
+
 
     }
 }
