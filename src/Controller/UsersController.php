@@ -9,16 +9,13 @@
 namespace App\Controller;
 
 
-<<<<<<< HEAD
-use App\Controller\SubjectsController;
-<<<<<<< HEAD
-=======
-use App\Model\Entity\Sessions;
-use App\Model\Entity\Users;
->>>>>>> Yanis
 
-=======
->>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
+use App\Controller\SubjectsController;
+
+use App\Model\Entity\Sessions;
+
+
+
 class UsersController extends AppController
 {
 
@@ -72,13 +69,13 @@ class UsersController extends AppController
     }
 
     public function affichageEtu(){
-<<<<<<< HEAD
+
         $users=$this->Users->find();
 
         $subjects=$this->Users->Groups->Subjects->find()->all();
 
         foreach ($subjects as $subject){
-<<<<<<< HEAD
+
 
 
             $query = $this->Users
@@ -96,61 +93,24 @@ class UsersController extends AppController
 /*test*/
 
 
-=======
-
-
-            $query = $this->Users
-                ->find()
-                ->select(['lastname', 'firstname'])
-                ->where(['id =' => $subject->idUserMentor])
-                ->all();
-
-
-            dd($query);
-            $subject->Enseignant = $query->lastaname . " " . $query->firstname;
-            dd($subject);
-        }
-
-
-
-
->>>>>>> Yanis
-
-
         $this->set(compact('users', 'subjects'));
-=======
+
 
         dd('coucou Etu');
->>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 
 
     }
 
     public function affichageEns(){
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-        }
-
         //dd('coucou Ens');
-
 
     }
 
     public function soumissionEns(){
-=======
-        dd('coucou Ens');
-<<<<<<< HEAD
-//oui
->>>>>>> Yanis
-=======
         dd('coucou Ens');
 
->>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
-=======
 //My name is !Yaaaaaaa
->>>>>>> Yanis
 
     }
 }
