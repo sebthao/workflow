@@ -66,7 +66,7 @@ class UsersController extends AppController
 
     public function affichageAdmin(){
         $users=$this->Users->find();
-        $sessions=$this->Users->Sessions->find()-all();
+        $sessions=$this->Users->Sessions->find()->all();
         $this->set(compact('users','sessions'));
 
     }
@@ -141,12 +141,16 @@ class UsersController extends AppController
     public function soumissionEns(){
 =======
         dd('coucou Ens');
+<<<<<<< HEAD
 //oui
 >>>>>>> Yanis
 =======
         dd('coucou Ens');
 
 >>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
+=======
+//My name is !Yaaaaaaa
+>>>>>>> Yanis
 
     }
 }
