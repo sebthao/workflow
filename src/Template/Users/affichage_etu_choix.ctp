@@ -1,7 +1,7 @@
 <?php
 
 
-echo $this->Form->create($users,['url' => ['controller' => 'Users', 'action' => 'afficheEtu']]);
+echo $this->Form->create($users,['url' => ['controller' => 'Users', 'action' => 'afficheEtuChoix']]);
 echo $this->Form->control('search',['label' => 'Recherche']);
 echo $this->Form->button('Rechercher');
 echo $this->Form->end();

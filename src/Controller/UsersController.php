@@ -43,7 +43,7 @@ class UsersController extends AppController
                         return $this->redirect('/Users/affichageEns');
                     }
                     else{
-                        return $this->redirect('/Users/affichageEtu');
+                        return $this->redirect('/Users/affichageEtuChoix');
                     }
                 }
 
@@ -63,7 +63,85 @@ class UsersController extends AppController
 
     }
 
-    public function affichageEtu(){
+    public function formulaireSoumission(){
+        $subject = $this->Users->Subjects->find();
+        $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
+
+
+        $profs= array();
+
+
+        $query = $this->Users
+            ->find()
+            ->select(['lastname', 'firstname'])
+            ->where(['idRole =' => 2])
+            ->all();
+
+
+
+
+        foreach($query as $q){
+
+            $tmp = $q->lastname . " " . $q->firstname;
+            array_push($profs,$tmp);
+
+        }
+
+
+        if(!empty($this->getRequest()->getData())) {
+
+            $subject = $this->Users->Subjects->newEntity();
+            $subject->title = $this->getRequest()->getData('title');
+            $subject->description = $this->getRequest()->getData('content');
+            $subject->idSession =1;
+
+            $subject->idUserCre = $user->id;
+
+            $subject->idUserMentor = 4;
+            $int =-1;
+            $tmp = $this->getRequest()->getData('mentor');
+
+
+            $query = $this->Users
+                ->find()
+                ->select(['id', 'lastname', 'firstname'])
+                ->where(['idRole =' => 2])
+                ->all();
+
+            foreach ($query as $q){
+                $int = $int +1;
+                if($int == $tmp){
+                    $subject->idUserMentor = $q->id;
+                }
+
+
+            }
+
+
+
+
+            if ($this->Users->Subjects->save($subject)) {
+
+                $this->Flash->success('Sauvegardé');
+                $this->getRequest()->getSession()->write('subject', $subject);
+                return $this->redirect('/Users/affichage_etu_choix');
+            } else {
+                $this->Flash->error('erreur');
+            }
+
+        }
+
+        $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
+
+
+
+
+        $this->set(compact('subject','user','profs'));
+    }
+
+
+
+    public function affichageEtuChoix(){
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
 
