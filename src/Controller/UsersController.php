@@ -18,14 +18,9 @@ class UsersController extends AppController
 {
 
     public function index(){
-//configure la base de donnée
-
-
+        //configure la base de donnée
         $users=$this->Users->find();
-
-
         if($this->getRequest()->getData() != null){
-
             $query = $this->Users
                 ->find()
                 ->where (['userName =' => $this->getRequest()->getData('userName'),'password =' => $this->getRequest()->getData('password')])
@@ -49,14 +44,11 @@ class UsersController extends AppController
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
                     }
                 }
-
             }
-
         }
-
-        $this->set(compact('users'));
-        
+       $this->set(compact('users'));
     }
+
 
     public function affichageAdmin(){
         $users=$this->Users->find();
@@ -74,34 +66,33 @@ class UsersController extends AppController
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
-
-
             dd($query);
             $subject->Enseignant = $query->lastaname . " " . $query->firstname;
             dd($subject);
-
             $this->set(compact('users', 'subjects'));
             foreach($query as $q){
-
-                    $subject->Enseignant = $q->lastname . " " . $q->firstname;
+                $subject->Enseignant = $q->lastname . " " . $q->firstname;
             }
-
-
         }
-
         $this->set(compact('users', 'subjects'));
     }
 
+
     public function affichageEns(){
-        $sessions=$this->Users->Sessions->find()->all();
+        dd($this->Users->Sessions->find()
+            ->select('id', 'date')
+            ->where (['id ='=>2])
+            ->all()
+        );
+        //$sessions=$this->Users->Sessions->find();
         $subjects=$this->Users->Subjects->find()->all();
-        $arraydate=array();
+        /*$arraydate=array();
 
         foreach ($sessions as $session){
             array_push($arraydate,$session->date);
        }
-       dd($arraydate);
-        $this->set(compact('subjects','sessions'));
+       dd($arraydate);*/
+        $this->set(compact('subjects'/*,'sessions'*/));
     }
 
     public function soumissionEns(){
@@ -113,17 +104,12 @@ class UsersController extends AppController
     public function choisirSubject()
     {
         $id2 = $this->getRequest()->getSession()->read('id');
-
         $arraysubjects=array();
         $users=$this->Users->get($id2);
-
         $subjects=$this->Users->Subjects->get($this->getRequest()->getData('id'));
         array_push($arraysubjects,$subjects);
         $users->subjects=$arraysubjects;
-
-
         $this->Users->save($users);
-
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
     }
