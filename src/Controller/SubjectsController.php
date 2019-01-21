@@ -42,11 +42,11 @@ class SubjectsController extends AppController
 
 
     $tags=array();
-    $query2 = $this->Subjects->Tags->select([])->where([])->all();
 
-    dd($query2);
+    $subjects = $this->Subjects->get($this->getRequest()->getSession()->read('id'));
+    $query2=$this->Subjects->find()->contain(['Tags'])->all();
     foreach($query2 as $tag) {
-        if ($tag->id == $this->getRequest()->getSession()->read('id')) {
+        if ($tag->id == $this->getRequest()->getData('id')) {
 
             $tags = $tag->tags;
         }
