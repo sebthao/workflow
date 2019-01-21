@@ -9,6 +9,8 @@
 namespace App\Controller;
 
 
+use App\Controller\SubjectsController;
+
 class UsersController extends AppController
 {
 
@@ -31,7 +33,9 @@ class UsersController extends AppController
                 $bool = true;
             }
             if($bool){
+
                 foreach($query as $user){
+                    $this->getRequest()->getSession()->write('id',$user->id);
                     if($user->idRole==1){
                         return $this->redirect('/Users/affichageAdmin');
                     }
@@ -60,16 +64,58 @@ class UsersController extends AppController
     }
 
     public function affichageEtu(){
+        $users=$this->Users->find();
+        $subjects=$this->Users->Groups->Subjects->find()->all();
 
-        dd('coucou Etu');
+        foreach ($subjects as $subject){
 
 
+            $query = $this->Users
+                ->find()
+                ->select(['lastname', 'firstname'])
+                ->where(['id =' => $subject->idUserMentor])
+                ->all();
+
+
+            foreach($query as $q){
+
+                $subject->Enseignant = $q->lastname . " " . $q->firstname;
+
+            }
+
+        }
+
+        $this->set(compact('users', 'subjects'));
     }
 
     public function affichageEns(){
-
         dd('coucou Ens');
 
+    }
+
+
+    public function choisirSubject()
+    {
+        $id2 = $this->getRequest()->getSession()->read('id');
+
+
+
+        $arraysubjects=array();
+        $users=$this->Users->get($id2);
+
+        $subjects=$this->Users->Subjects->get($this->getRequest()->getData('id'));
+        array_push($arraysubjects,$subjects);
+
+
+
+
+        $users->subjects=$arraysubjects;
+
+
+        $this->Users->save($users);
+
+        $this->Flash->success('Choix bien enregistré');
+        return $this->redirect('/Users/affichageEtu');
 
     }
 }
