@@ -16,8 +16,12 @@ class UsersTable extends Table
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Groups');
+<<<<<<< HEAD
         $this->hasOne('Roles');
         $this->hasMany('Sessions');
+=======
+        $this->belongsToMany('Sessions');
+>>>>>>> Yanis
     }
 
 }

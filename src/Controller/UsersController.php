@@ -10,6 +10,11 @@ namespace App\Controller;
 
 
 use App\Controller\SubjectsController;
+<<<<<<< HEAD
+=======
+use App\Model\Entity\Sessions;
+use App\Model\Entity\Users;
+>>>>>>> Yanis
 
 class UsersController extends AppController
 {
@@ -35,13 +40,13 @@ class UsersController extends AppController
             if($bool){
                 foreach($query as $user){
                     if($user->idRole==1){
-                        return $this->redirect('/Users/affichageAdmin');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
                     else if($user->idRole==2){
-                        return $this->redirect('/Users/affichageEns');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
                     }
                     else{
-                        return $this->redirect('/Users/affichageEtu');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
                     }
                 }
 
@@ -57,7 +62,9 @@ class UsersController extends AppController
     }
 
     public function affichageAdmin(){
-        dd('coucou Admin');
+        $users=$this->Users->find();
+        $sessions=$this->Users->Sessions->find()-all();
+        $this->set(compact('users','sessions'));
 
     }
 
@@ -67,6 +74,7 @@ class UsersController extends AppController
         $subjects=$this->Users->Groups->Subjects->find()->all();
 
         foreach ($subjects as $subject){
+<<<<<<< HEAD
 
 
             $query = $this->Users
@@ -84,6 +92,25 @@ class UsersController extends AppController
 /*test*/
 
 
+=======
+
+
+            $query = $this->Users
+                ->find()
+                ->select(['lastname', 'firstname'])
+                ->where(['id =' => $subject->idUserMentor])
+                ->all();
+
+
+            dd($query);
+            $subject->Enseignant = $query->lastaname . " " . $query->firstname;
+            dd($subject);
+        }
+
+
+
+
+>>>>>>> Yanis
 
 
         $this->set(compact('users', 'subjects'));
@@ -103,6 +130,7 @@ class UsersController extends AppController
 
             //$subject
 
+<<<<<<< HEAD
 
         }
 
@@ -112,6 +140,10 @@ class UsersController extends AppController
     }
 
     public function soumissionEns(){
+=======
+        dd('coucou Ens');
+//oui
+>>>>>>> Yanis
 
     }
 }
