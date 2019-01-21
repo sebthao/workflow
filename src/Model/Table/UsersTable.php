@@ -13,6 +13,7 @@ use Cake\ORM\Table;
 
 class UsersTable extends Table
 {
+<<<<<<< HEAD
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Groups');
@@ -23,5 +24,8 @@ class UsersTable extends Table
         $this->belongsToMany('Sessions');
 >>>>>>> Yanis
     }
+=======
+
+>>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 
 }

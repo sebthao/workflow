@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+<<<<<<< HEAD
 use App\Controller\SubjectsController;
 <<<<<<< HEAD
 =======
@@ -16,6 +17,8 @@ use App\Model\Entity\Sessions;
 use App\Model\Entity\Users;
 >>>>>>> Yanis
 
+=======
+>>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 class UsersController extends AppController
 {
 
@@ -69,6 +72,7 @@ class UsersController extends AppController
     }
 
     public function affichageEtu(){
+<<<<<<< HEAD
         $users=$this->Users->find();
 
         $subjects=$this->Users->Groups->Subjects->find()->all();
@@ -114,22 +118,17 @@ class UsersController extends AppController
 
 
         $this->set(compact('users', 'subjects'));
+=======
+
+        dd('coucou Etu');
+>>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 
 
     }
 
     public function affichageEns(){
-        dd($this->Users->Sessions->find()->all());
-        $subjects=$this->Users->Groups->Subjects->find()->all();
-        $sessions=$this->Users->Sessions->find()->all();
-        foreach ($subjects as $subject){
-            $query = $this->Users
-                ->find()
-                ->select(['firstName', 'lastName'])
-                ->all();
 
-            //$subject
-
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         }
@@ -144,6 +143,10 @@ class UsersController extends AppController
         dd('coucou Ens');
 //oui
 >>>>>>> Yanis
+=======
+        dd('coucou Ens');
+
+>>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 
     }
 }
