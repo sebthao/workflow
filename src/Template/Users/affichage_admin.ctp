@@ -7,3 +7,8 @@ echo $this->Form->end();
 echo $this->Form->create($users,['url' => ['controller' => 'Sessions', 'action' => 'addSession']]);
 echo $this->Form->button('New Session');
 echo $this->Form->end();
+
+foreach($sessions as $session){
+
+
+}

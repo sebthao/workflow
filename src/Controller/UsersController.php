@@ -60,7 +60,7 @@ class UsersController extends AppController
 
     public function affichageAdmin(){
         $users=$this->Users->find();
-        $sessions=$this->Users->Sessions->find()-all();
+        $sessions=$this->Users->Sessions->find()->all();
         $this->set(compact('users','sessions'));
 
     }
@@ -98,7 +98,7 @@ class UsersController extends AppController
     public function affichageEns(){
 
         dd('coucou Ens');
-//oui
+//ouindfsbkjdsghedzjgzeogzejopzejzoezegozegojgzeozegjgzoejgzeojgzeo
 
     }
 }
