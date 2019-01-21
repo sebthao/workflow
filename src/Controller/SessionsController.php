@@ -17,5 +17,35 @@ class SessionsController  extends AppController
         $sessions = $this->Subjects->find()->all();
         return $sessions;
     }
+    public function add()
+    {
+
+        $sessions = $this->Subjects->find()->all();
+        return $sessions;
+    }
+    public function supr()
+    {
+
+        $sessions = $this->Subjects->find()->all();
+        return $sessions;
+    }
+    public function clone()
+    {
+
+        $sessions = $this->Subjects->find()->all();
+        return $sessions;
+    }
+    public function admission()
+    {
+
+        $sessions = $this->Subjects->find()->all();
+        return $sessions;
+    }
+    public function view()
+    {
+
+        $sessions = $this->Subjects->find()->all();
+        return $sessions;
+    }
 
 }
