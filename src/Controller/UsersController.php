@@ -9,8 +9,18 @@
 namespace App\Controller;
 
 
+<<<<<<< HEAD
 use App\Controller\SubjectsController;
 
+=======
+
+use App\Controller\SubjectsController;
+
+use App\Model\Entity\Sessions;
+
+
+
+>>>>>>> Yanis
 class UsersController extends AppController
 {
 
@@ -37,13 +47,13 @@ class UsersController extends AppController
                 foreach($query as $user){
                     $this->getRequest()->getSession()->write('id',$user->id);
                     if($user->idRole==1){
-                        return $this->redirect('/Users/affichageAdmin');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
                     else if($user->idRole==2){
-                        return $this->redirect('/Users/affichageEns');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
                     }
                     else{
-                        return $this->redirect('/Users/affichageEtu');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
                     }
                 }
 
@@ -59,7 +69,9 @@ class UsersController extends AppController
     }
 
     public function affichageAdmin(){
-        dd('coucou Admin');
+        $users=$this->Users->find();
+        $sessions=$this->Users->Sessions->find()->all();
+        $this->set(compact('users','sessions'));
 
     }
 
@@ -69,12 +81,39 @@ class UsersController extends AppController
 
         foreach ($subjects as $subject){
 
+<<<<<<< HEAD
+=======
+        $users=$this->Users->find();
+
+        $subjects=$this->Users->Groups->Subjects->find()->all();
+
+        foreach ($subjects as $subject){
+
+
+>>>>>>> Yanis
 
             $query = $this->Users
                 ->find()
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
+<<<<<<< HEAD
+=======
+
+
+            dd($query);
+            $subject->Enseignant = $query->lastaname . " " . $query->firstname;
+            dd($subject);
+        }
+
+/*test*/
+
+
+        $this->set(compact('users', 'subjects'));
+
+
+        dd('coucou Etu');
+>>>>>>> Yanis
 
 
             foreach($query as $q){
@@ -89,6 +128,7 @@ class UsersController extends AppController
     }
 
     public function affichageEns(){
+<<<<<<< HEAD
         dd('coucou Ens');
 
     }
@@ -116,6 +156,17 @@ class UsersController extends AppController
 
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
+=======
+
+        //dd('coucou Ens');
+
+    }
+
+    public function soumissionEns(){
+        dd('coucou Ens');
+
+//My name is !Yaaaaaaa
+>>>>>>> Yanis
 
     }
 }
