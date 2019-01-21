@@ -10,5 +10,23 @@ echo $this->Form->end();
 
 foreach($sessions as $session){
 
+echo $session->promotion."<br>";
+    echo $this->Form->create($users,['url' => ['controller' => 'Sessions', 'action' => 'addSession']]);
+    $this->Form->hidden('article_id', ['value' => $session->id]);
+    echo $this->Form->button('Voir');
+    echo $this->Form->end();
+    echo $this->Form->create($users,['url' => ['controller' => 'Sessions', 'action' => 'addSession']]);
+    $this->Form->hidden('article_id', ['value' => $session->id]);
+    echo $this->Form->button('Dupliquer');
+    echo $this->Form->end();
+    echo $this->Form->create($users,['url' => ['controller' => 'Sessions', 'action' => 'addSession']]);
+    $this->Form->hidden('article_id', ['value' => $session->id]);
+    echo $this->Form->button('Admission');
+    echo $this->Form->end();
+    echo $this->Form->create($users,['url' => ['controller' => 'Sessions', 'action' => 'addSession']]);
+    $this->Form->hidden('article_id', ['value' => $session->id]);
+    echo $this->Form->button('Supprimer');
+    echo $this->Form->end();
+
 
 }
