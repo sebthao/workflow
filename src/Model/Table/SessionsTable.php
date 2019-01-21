@@ -2,21 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: p1601402
- * Date: 19/12/2018
- * Time: 17:37
+ * Date: 21/01/2019
+ * Time: 10:58
  */
 
 namespace App\Model\Table;
-
-
 use Cake\ORM\Table;
 
-class UsersTable extends Table
+class SessionsTable extends Table
 {
     public function initialize(array $config){
         parent::initialize($config);
-        $this->hasOne('Groups');
-        $this->belongsToMany('Sessions');
+        $this->belongsToMany('Users');
     }
 
 }

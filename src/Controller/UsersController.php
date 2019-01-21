@@ -9,6 +9,10 @@
 namespace App\Controller;
 
 
+use App\Controller\SubjectsController;
+use App\Model\Entity\Sessions;
+use App\Model\Entity\Users;
+
 class UsersController extends AppController
 {
 
@@ -33,13 +37,13 @@ class UsersController extends AppController
             if($bool){
                 foreach($query as $user){
                     if($user->idRole==1){
-                        return $this->redirect('/Users/affichageAdmin');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
                     else if($user->idRole==2){
-                        return $this->redirect('/Users/affichageEns');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
                     }
                     else{
-                        return $this->redirect('/Users/affichageEtu');
+                        return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
                     }
                 }
 
@@ -55,13 +59,38 @@ class UsersController extends AppController
     }
 
     public function affichageAdmin(){
-        dd('coucou Admin');
+        $users=$this->Users->find();
+        $sessions=$this->Users->Sessions->find()-all();
+        $this->set(compact('users','sessions'));
 
     }
 
     public function affichageEtu(){
+        $users=$this->Users->find();
 
-        dd('coucou Etu');
+        $subjects=$this->Users->Groups->Subjects->find()->all();
+
+        foreach ($subjects as $subject){
+
+
+            $query = $this->Users
+                ->find()
+                ->select(['lastname', 'firstname'])
+                ->where(['id =' => $subject->idUserMentor])
+                ->all();
+
+
+            dd($query);
+            $subject->Enseignant = $query->lastaname . " " . $query->firstname;
+            dd($subject);
+        }
+
+
+
+
+
+
+        $this->set(compact('users', 'subjects'));
 
 
     }
@@ -69,7 +98,7 @@ class UsersController extends AppController
     public function affichageEns(){
 
         dd('coucou Ens');
-
+//oui
 
     }
 }
