@@ -18,9 +18,12 @@ class SubjectsTable extends Table
         $this->hasOne('Groups');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->belongsToMany('Users');
         $this->belongsToMany('Tags');
 =======
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 <<<<<<< HEAD
@@ -30,12 +33,18 @@ class SubjectsTable extends Table
 >>>>>>> Yanis
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Yanis
 =======
+=======
+>>>>>>> master
 =======
         $this->belongsToMany('Users');
         $this->belongsToMany('Tags');
 >>>>>>> Marie
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
     }
 }

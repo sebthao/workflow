@@ -11,9 +11,12 @@ namespace App\Controller;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Controller\SubjectsController;
 
 =======
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 
@@ -24,12 +27,18 @@ use App\Model\Entity\Sessions;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Yanis
 =======
+=======
+>>>>>>> master
 =======
 use App\Controller\SubjectsController;
 
 >>>>>>> Marie
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 class UsersController extends AppController
 {
@@ -93,7 +102,10 @@ class UsersController extends AppController
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 =======
 >>>>>>> master
         $users=$this->Users->find();
@@ -104,7 +116,12 @@ class UsersController extends AppController
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Yanis
+=======
+=======
+>>>>>>> Marie
+>>>>>>> master
 =======
 =======
 >>>>>>> Marie
@@ -117,7 +134,10 @@ class UsersController extends AppController
                 ->all();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 
@@ -135,7 +155,12 @@ class UsersController extends AppController
 
         dd('coucou Etu');
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Yanis
+=======
+=======
+>>>>>>> Marie
+>>>>>>> master
 =======
 =======
 >>>>>>> Marie
@@ -156,7 +181,10 @@ class UsersController extends AppController
     public function affichageEns(){
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 
         //dd('coucou Ens');
 
@@ -166,6 +194,9 @@ class UsersController extends AppController
         dd('coucou Ens');
 
 //My name is !Yaaaaaaa
+=======
+<<<<<<< HEAD
+>>>>>>> master
 =======
 >>>>>>> master
         dd('coucou Ens');
@@ -196,6 +227,7 @@ class UsersController extends AppController
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
         //dd('coucou Ens');
@@ -207,6 +239,9 @@ class UsersController extends AppController
 
 //My name is !Yaaaaaaa
 >>>>>>> Yanis
+=======
+>>>>>>> Marie
+>>>>>>> master
 =======
 >>>>>>> Marie
 >>>>>>> master

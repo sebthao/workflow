@@ -15,12 +15,15 @@ class UsersTable extends Table
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Groups');
         $this->belongsToMany('Subjects');
     }
 =======
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 <<<<<<< HEAD
@@ -38,8 +41,11 @@ class UsersTable extends Table
 
 >>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Yanis
 =======
+=======
+>>>>>>> master
 =======
     public function initialize(array $config){
         parent::initialize($config);
@@ -47,6 +53,9 @@ class UsersTable extends Table
         $this->belongsToMany('Subjects');
     }
 >>>>>>> Marie
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 
 }
