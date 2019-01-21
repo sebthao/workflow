@@ -10,9 +10,12 @@ namespace App\Controller;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Controller\SubjectsController;
 
 =======
+=======
+>>>>>>> master
 
 use App\Controller\SubjectsController;
 
@@ -20,7 +23,14 @@ use App\Model\Entity\Sessions;
 
 
 
+<<<<<<< HEAD
 >>>>>>> Yanis
+=======
+=======
+use App\Controller\SubjectsController;
+
+>>>>>>> Marie
+>>>>>>> master
 class UsersController extends AppController
 {
 
@@ -82,7 +92,10 @@ class UsersController extends AppController
         foreach ($subjects as $subject){
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
         $users=$this->Users->find();
 
         $subjects=$this->Users->Groups->Subjects->find()->all();
@@ -90,7 +103,12 @@ class UsersController extends AppController
         foreach ($subjects as $subject){
 
 
+<<<<<<< HEAD
 >>>>>>> Yanis
+=======
+=======
+>>>>>>> Marie
+>>>>>>> master
 
             $query = $this->Users
                 ->find()
@@ -98,7 +116,10 @@ class UsersController extends AppController
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 
 
             dd($query);
@@ -113,7 +134,12 @@ class UsersController extends AppController
 
 
         dd('coucou Etu');
+<<<<<<< HEAD
 >>>>>>> Yanis
+=======
+=======
+>>>>>>> Marie
+>>>>>>> master
 
 
             foreach($query as $q){
@@ -129,6 +155,19 @@ class UsersController extends AppController
 
     public function affichageEns(){
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+        //dd('coucou Ens');
+
+    }
+
+    public function soumissionEns(){
+        dd('coucou Ens');
+
+//My name is !Yaaaaaaa
+=======
+>>>>>>> master
         dd('coucou Ens');
 
     }
@@ -156,6 +195,7 @@ class UsersController extends AppController
 
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
+<<<<<<< HEAD
 =======
 
         //dd('coucou Ens');
@@ -167,6 +207,9 @@ class UsersController extends AppController
 
 //My name is !Yaaaaaaa
 >>>>>>> Yanis
+=======
+>>>>>>> Marie
+>>>>>>> master
 
     }
 }
