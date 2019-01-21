@@ -9,18 +9,24 @@
 namespace App\Controller;
 
 
+<<<<<<< master
 <<<<<<< HEAD
 
+=======
+>>>>>>> local
 use App\Controller\SubjectsController;
 
 use App\Model\Entity\Sessions;
 
 
+<<<<<<< master
 
 =======
 use App\Controller\SubjectsController;
 
 >>>>>>> Marie
+=======
+>>>>>>> local
 class UsersController extends AppController
 {
 
@@ -59,9 +65,6 @@ class UsersController extends AppController
 
             }
 
-
-
-
         }
 
         $this->set(compact('users'));
@@ -78,9 +81,9 @@ class UsersController extends AppController
     public function affichageEtu(){
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
-
         foreach ($subjects as $subject){
 
+<<<<<<< master
 <<<<<<< HEAD
         $users=$this->Users->find();
 
@@ -91,18 +94,25 @@ class UsersController extends AppController
 
 =======
 >>>>>>> Marie
+=======
+>>>>>>> local
 
             $query = $this->Users
                 ->find()
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
+<<<<<<< master
 <<<<<<< HEAD
+=======
+
+>>>>>>> local
 
 
             dd($query);
             $subject->Enseignant = $query->lastaname . " " . $query->firstname;
             dd($subject);
+<<<<<<< master
         }
 
 /*test*/
@@ -115,7 +125,10 @@ class UsersController extends AppController
 =======
 >>>>>>> Marie
 
+=======
+>>>>>>> local
 
+            $this->set(compact('users', 'subjects'));
             foreach($query as $q){
 
                 $subject->Enseignant = $q->lastname . " " . $q->firstname;
@@ -128,7 +141,11 @@ class UsersController extends AppController
     }
 
     public function affichageEns(){
+<<<<<<< master
 <<<<<<< HEAD
+=======
+
+>>>>>>> local
 
         //dd('coucou Ens');
 
@@ -137,9 +154,12 @@ class UsersController extends AppController
     public function soumissionEns(){
         dd('coucou Ens');
 
+<<<<<<< master
 //My name is !Yaaaaaaa
 =======
         dd('coucou Ens');
+=======
+>>>>>>> local
 
     }
 
@@ -148,17 +168,11 @@ class UsersController extends AppController
     {
         $id2 = $this->getRequest()->getSession()->read('id');
 
-
-
         $arraysubjects=array();
         $users=$this->Users->get($id2);
 
         $subjects=$this->Users->Subjects->get($this->getRequest()->getData('id'));
         array_push($arraysubjects,$subjects);
-
-
-
-
         $users->subjects=$arraysubjects;
 
 
@@ -166,7 +180,13 @@ class UsersController extends AppController
 
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
+<<<<<<< master
 >>>>>>> Marie
+=======
+
+
+        //dd('coucou Ens');
+>>>>>>> local
 
     }
 }

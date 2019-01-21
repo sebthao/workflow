@@ -56,25 +56,6 @@ class SubjectsController extends AppController
     $this->set(compact('subjects', 'tags'));
     }
 
-    public function choisirSubject()
-    {
-        $id = $this->getRequest()->getData('id');
-
-        if($id!=null){
-            $this->getRequest()->getSession()->write('id',$id);
-        }
-        $arraysubjects=array();
-        $subjects = $this->Subjects->get($this->getRequest()->getSession()->read('id'));
-        $users=$this->Subjects->Users->get($id);
-        array_push($arraysubjects,$users);
-        $subjects->users=$arraysubjects;
-        $subjects->users->rank = 1;
-        $this->Subjects->save($subjects);
-
-
-
-    }
-
 
 
 
