@@ -34,15 +34,26 @@ class SubjectsController extends AppController
         ->where(['id =' => $subjects->idUserMentor])
         ->all();
 
-        foreach ($query as $q) {
+    foreach ($query as $q) {
 
-            $subjects->Enseignant = $q->lastname . " " . $q->firstname;
+        $subjects->Enseignant = $q->lastname . " " . $q->firstname;
 
+    }
+
+
+    $tags=array();
+    $query2 = $this->Subjects->Tags->select([])->where([])->all();
+
+    dd($query2);
+    foreach($query2 as $tag) {
+        if ($tag->id == $this->getRequest()->getSession()->read('id')) {
+
+            $tags = $tag->tags;
         }
+    }
 
 
-
-    $this->set(compact('subjects'));
+    $this->set(compact('subjects', 'tags'));
     }
 
     public function choisirSubject()

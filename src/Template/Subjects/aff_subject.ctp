@@ -3,7 +3,10 @@
     echo "Titre : ".$subjects->title . "<br>";
     echo "Description : ".$subjects->description . "<br>";
     echo "Enseignant : ".$subjects->Enseignant."<br>";
-
+    echo "Mots clefs : "."<br>";
+    foreach($tags as $tag){
+        echo "- ".$tag->name.'<br>';
+    }
 
 
 
