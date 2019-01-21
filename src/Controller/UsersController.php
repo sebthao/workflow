@@ -9,24 +9,11 @@
 namespace App\Controller;
 
 
-<<<<<<< master
-<<<<<<< HEAD
-
-=======
->>>>>>> local
 use App\Controller\SubjectsController;
-
 use App\Model\Entity\Sessions;
+use App\Model\Entity\Users;
 
 
-<<<<<<< master
-
-=======
-use App\Controller\SubjectsController;
-
->>>>>>> Marie
-=======
->>>>>>> local
 class UsersController extends AppController
 {
 
@@ -82,58 +69,23 @@ class UsersController extends AppController
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
         foreach ($subjects as $subject){
-
-<<<<<<< master
-<<<<<<< HEAD
-        $users=$this->Users->find();
-
-        $subjects=$this->Users->Groups->Subjects->find()->all();
-
-        foreach ($subjects as $subject){
-
-
-=======
->>>>>>> Marie
-=======
->>>>>>> local
-
             $query = $this->Users
                 ->find()
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
-<<<<<<< master
-<<<<<<< HEAD
-=======
-
->>>>>>> local
 
 
             dd($query);
             $subject->Enseignant = $query->lastaname . " " . $query->firstname;
             dd($subject);
-<<<<<<< master
-        }
-
-/*test*/
-
-
-        $this->set(compact('users', 'subjects'));
-
-
-        dd('coucou Etu');
-=======
->>>>>>> Marie
-
-=======
->>>>>>> local
 
             $this->set(compact('users', 'subjects'));
             foreach($query as $q){
 
-                $subject->Enseignant = $q->lastname . " " . $q->firstname;
-
+                    $subject->Enseignant = $q->lastname . " " . $q->firstname;
             }
+
 
         }
 
@@ -141,25 +93,19 @@ class UsersController extends AppController
     }
 
     public function affichageEns(){
-<<<<<<< master
-<<<<<<< HEAD
-=======
+        $sessions=$this->Users->Sessions->find()->all();
+        $subjects=$this->Users->Subjects->find()->all();
+        $arraydate=array();
 
->>>>>>> local
-
-        //dd('coucou Ens');
-
+        foreach ($sessions as $session){
+            array_push($arraydate,$session->date);
+       }
+       dd($arraydate);
+        $this->set(compact('subjects','sessions'));
     }
 
     public function soumissionEns(){
         dd('coucou Ens');
-
-<<<<<<< master
-//My name is !Yaaaaaaa
-=======
-        dd('coucou Ens');
-=======
->>>>>>> local
 
     }
 
@@ -180,13 +126,5 @@ class UsersController extends AppController
 
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
-<<<<<<< master
->>>>>>> Marie
-=======
-
-
-        //dd('coucou Ens');
->>>>>>> local
-
     }
 }

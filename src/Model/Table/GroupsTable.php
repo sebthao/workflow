@@ -17,7 +17,7 @@ class GroupsTable extends Table
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Subjects');
-        $this->belongsToMany('Users');
+        $this->hasMany('Users');
     }
 
 

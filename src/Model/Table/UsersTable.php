@@ -13,27 +13,13 @@ use Cake\ORM\Table;
 
 class UsersTable extends Table
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public function initialize(array $config){
+    public function initialize(array $config)
+    {
         parent::initialize($config);
         $this->hasOne('Groups');
-<<<<<<< HEAD
-        $this->hasOne('Roles');
-        $this->hasMany('Sessions');
-=======
+        $this->belongsToMany('Roles');
         $this->belongsToMany('Sessions');
->>>>>>> Yanis
-    }
-=======
-
->>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
-=======
-    public function initialize(array $config){
-        parent::initialize($config);
-        $this->hasOne('Groups');
         $this->belongsToMany('Subjects');
-    }
->>>>>>> Marie
 
+    }
 }
