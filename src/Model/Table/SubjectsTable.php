@@ -18,7 +18,12 @@ class SubjectsTable extends Table
         $this->hasOne('Groups');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->belongsToMany('Users');
+=======
+        $this->belongsToMany('Promotions');
+        $this->belongsToMany('Users', ['through'=>'SubjectsUsers']);
+>>>>>>> remotes/origin/Marie
         $this->belongsToMany('Tags');
 =======
 <<<<<<< HEAD

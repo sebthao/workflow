@@ -12,6 +12,8 @@ namespace App\Controller;
 <<<<<<< HEAD
 <<<<<<< HEAD
 use App\Controller\SubjectsController;
+use Cake\ORM\ResultSet;
+use PhpParser\Node\Expr\Array_;
 
 =======
 
@@ -54,7 +56,11 @@ class UsersController extends AppController
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
                     }
                     else{
+<<<<<<< HEAD
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
+=======
+                        return $this->redirect('/Users/affichageEtuChoix');
+>>>>>>> remotes/origin/Marie
                     }
                 }
             }
@@ -70,7 +76,80 @@ class UsersController extends AppController
 
     }
 
-    public function affichageEtu(){
+    public function formulaireSoumission(){
+        $subject = $this->Users->Subjects->find();
+        $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
+
+
+        $profs= array();
+
+
+        $query = $this->Users
+            ->find()
+            ->select(['lastname', 'firstname'])
+            ->where(['idRole =' => 2])
+            ->all();
+
+
+
+
+
+        foreach($query as $q){
+            $tmp = $q->lastname . " " . $q->firstname;
+            array_push($profs,$tmp);
+
+        }
+
+
+        if(!empty($this->getRequest()->getData())) {
+
+            $subject = $this->Users->Subjects->newEntity();
+            $subject->title = $this->getRequest()->getData('title');
+            $subject->description = $this->getRequest()->getData('content');
+            $subject->idSession =1;
+
+            $subject->idUserCre = $user->id;
+
+            $subject->idUserMentor = 4;
+            $int =-1;
+            $tmp = $this->getRequest()->getData('mentor');
+
+
+            $query = $this->Users
+                ->find()
+                ->select(['id', 'lastname', 'firstname'])
+                ->where(['idRole =' => 2])
+                ->all();
+
+            foreach ($query as $q){
+                $int = $int +1;
+                if($int == $tmp){
+                    $subject->idUserMentor = $q->id;
+                }
+
+
+            }
+
+            if ($this->Users->Subjects->save($subject)) {
+
+                $this->Flash->success('Sauvegardé');
+                $this->getRequest()->getSession()->write('subject', $subject);
+                return $this->redirect('/Users/affichage_etu_choix');
+            } else {
+                $this->Flash->error('erreur');
+            }
+
+        }
+
+        $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
+
+
+        $this->set(compact('subject','user','profs'));
+    }
+
+
+
+    public function affichageEtuChoix(){
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
 <<<<<<< HEAD
@@ -82,6 +161,16 @@ class UsersController extends AppController
         $users=$this->Users->find();
 
         $subjects=$this->Users->Groups->Subjects->find()->all();
+
+
+        $query2=$this->Users->SubjectsUsers
+            ->find()
+            ->where(['user_id ='=> $this->getRequest()->getSession()->read('id')])
+            ->all();
+
+
+
+
 
         foreach ($subjects as $subject){
 
@@ -116,6 +205,7 @@ class UsersController extends AppController
 >>>>>>> Yanis
 
 
+<<<<<<< HEAD
 =======
             dd($query);
             $subject->Enseignant = $query->lastaname . " " . $query->firstname;
@@ -127,6 +217,9 @@ class UsersController extends AppController
             }
         }
         $this->set(compact('users', 'subjects'));
+=======
+        $this->set(compact('users', 'subjects', 'query2'));
+>>>>>>> remotes/origin/Marie
     }
 
 <<<<<<< HEAD
@@ -153,6 +246,7 @@ class UsersController extends AppController
         $this->set(compact('subjects'/*,'sessions'*/));
     }
 
+<<<<<<< HEAD
     public function soumissionEns(){
         $subjects=$this->Users->Subjects->newEntity();
         $this->set(compact('subjects'));
@@ -160,8 +254,17 @@ class UsersController extends AppController
 >>>>>>> master
 
     }
+=======
+    public function choisirSubject()
+    {
+        $id2 = $this->getRequest()->getSession()->read('id');
 
+        $query = $this->Users->SubjectsUsers->find()->select('id', 'subject_id','user_id')->where (['user_id ='=>$id2])->all();
+>>>>>>> remotes/origin/Marie
 
+        $rank = $query->count()+1;
+
+<<<<<<< HEAD
     public function choisirSubject()
     {
         $id2 = $this->getRequest()->getSession()->read('id');
@@ -185,6 +288,43 @@ class UsersController extends AppController
 
 //My name is !Yaaaaaaa
 >>>>>>> Yanis
+=======
+        $queryDuplicate = $this->Users->SubjectsUsers->find()
+            ->where(['user_id ='=>$this->getRequest()->getSession()->read('id'), 'subject_id ='=>$this->getRequest()->getData('id')])
+            ->toArray();
+
+
+        $queryAll = $this->Users->SubjectsUsers->find()
+            ->where(['user_id ='=>$this->getRequest()->getSession()->read('id')])
+            ->all();
+
+
+        if(empty($queryDuplicate)){
+
+
+            $subuser=$this->Users->SubjectsUsers->newEntity();
+            $subuser->subject_id=$this->getRequest()->getData('id');
+            $subuser->user_id=$id2;
+            $subuser->rank=$rank;
+            $this->Users->SubjectsUsers->save($subuser);
+
+        }
+        else {
+            foreach ($queryDuplicate as $q){
+                $ranktmp=$q->rank;
+                $q->rank = $rank-1;
+                $this->Users->SubjectsUsers->save($q);
+            }
+            foreach ($queryAll as $q2){
+                if($q2->rank>$ranktmp){
+                    $q2->rank=$q2->rank-1;
+                    $this->Users->SubjectsUsers->save($q2);
+                }
+            }
+        }
+
+        return $this->redirect('/Users/affichageEtuChoix');
+>>>>>>> remotes/origin/Marie
 
 =======
 >>>>>>> master
