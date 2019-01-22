@@ -56,26 +56,50 @@ class SubjectsController extends AppController
     $this->set(compact('subjects', 'tags'));
     }
 
-    public function choisirSubject()
-    {
-        $id = $this->getRequest()->getData('id');
+    public function addSubject(){
+        dd($this->getRequest());
+        $subjects = $this->Subjects->find();
+        if(!empty($this->getRequest()->getData())){
+            $subjects= $this->Subjects->newEntity('',
+                                                $this->getRequest()->getData('Titre'),
+                                                $this->getRequest()->getData('Titre')
 
-        if($id!=null){
-            $this->getRequest()->getSession()->write('id',$id);
+                );
+
+            if ($this->Subjects->save($subjects)){
+                $this->Flash->success("Sujet créé");
+              //  $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
+            }else{
+                $this->Flash->error('erreur');
+               // $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
+            }
         }
-        $arraysubjects=array();
-        $subjects = $this->Subjects->get($this->getRequest()->getSession()->read('id'));
-        $users=$this->Subjects->Users->get($id);
-        array_push($arraysubjects,$users);
-        $subjects->users=$arraysubjects;
-        $subjects->users->rank = 1;
-        $this->Subjects->save($subjects);
-
-
-
+        $this->redirect(['controller'=>'Users','action'=>'affichageEns']);
+     //   $this->set(compact('subjects'));
     }
 
+    public function descriptionPtut(){
+        $subjects=$this->Subjects->find()->all();
+        $idmentors=$this->Subjects->Users->find()
+            ->all();
+        //dd($idmentors);
+        foreach ($subjects as $subject) {
+            if ($subject->id == $this->getRequest()->getData('id')) {
+                foreach($idmentors as $idmentor){
+                    //dd($idmentor);
+                    if ($idmentor->id==$subject->idUserMentor){
+                        $nomMentor= $idmentor->firstName." ".$idmentor->lastName;
+                        $this->set(compact('nomMentor'));
+                    }
+                }
+                $this->set(compact('subject'));
+            } else {}
+        }
+    }/*un turc con*/
 
+    public function setVisible(){
+
+    }
 
 
 }

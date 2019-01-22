@@ -14,6 +14,7 @@ use Cake\ORM\Table;
 class UsersTable extends Table
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Groups');
@@ -35,5 +36,15 @@ class UsersTable extends Table
 
 >>>>>>> 4cf39ef52c2278b9e3dc14da2bf6bc9fa888d035
 >>>>>>> Yanis
+=======
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->hasOne('Groups');
+        $this->belongsToMany('Roles');
+        $this->belongsToMany('Ptutsessions');
+        $this->belongsToMany('Subjects');
+>>>>>>> master
 
+    }
 }

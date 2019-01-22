@@ -10,29 +10,30 @@ namespace App\Controller;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Controller\SubjectsController;
 
 =======
 
+=======
+>>>>>>> master
 use App\Controller\SubjectsController;
-
 use App\Model\Entity\Sessions;
+use App\Model\Entity\Users;
 
 
+<<<<<<< HEAD
 
 >>>>>>> Yanis
+=======
+>>>>>>> master
 class UsersController extends AppController
 {
 
     public function index(){
-//configure la base de donnée
-
-
+        //configure la base de donnée
         $users=$this->Users->find();
-
-
         if($this->getRequest()->getData() != null){
-
             $query = $this->Users
                 ->find()
                 ->where (['userName =' => $this->getRequest()->getData('userName'),'password =' => $this->getRequest()->getData('password')])
@@ -56,17 +57,11 @@ class UsersController extends AppController
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
                     }
                 }
-
             }
-
-
-
-
         }
-
-        $this->set(compact('users'));
-        
+       $this->set(compact('users'));
     }
+
 
     public function affichageAdmin(){
         $users=$this->Users->find();
@@ -78,6 +73,7 @@ class UsersController extends AppController
     public function affichageEtu(){
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
+<<<<<<< HEAD
 
         foreach ($subjects as $subject){
 
@@ -92,11 +88,15 @@ class UsersController extends AppController
 
 >>>>>>> Yanis
 
+=======
+        foreach ($subjects as $subject){
+>>>>>>> master
             $query = $this->Users
                 ->find()
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -116,20 +116,48 @@ class UsersController extends AppController
 >>>>>>> Yanis
 
 
+=======
+            dd($query);
+            $subject->Enseignant = $query->lastaname . " " . $query->firstname;
+            dd($subject);
+            $this->set(compact('users', 'subjects'));
+>>>>>>> master
             foreach($query as $q){
-
                 $subject->Enseignant = $q->lastname . " " . $q->firstname;
-
             }
-
         }
-
         $this->set(compact('users', 'subjects'));
     }
 
+<<<<<<< HEAD
     public function affichageEns(){
 <<<<<<< HEAD
         dd('coucou Ens');
+=======
+
+    public function affichageEns(){
+        //dd($this->Users->Ptutsessions->get(0));
+        /*dd($this->Users->Sessions->find()
+            ->select('id', 'date_event')
+            ->where (['id ='=>2])
+            ->all()
+        );*/
+        //$sessions=$this->Users->Sessions->find();
+        $subjects=$this->Users->Subjects->find()->all();
+        /*$arraydate=array();
+
+        foreach ($sessions as $session){
+            array_push($arraydate,$session->date);
+       }
+       dd($arraydate);*/
+        $this->set(compact('subjects'/*,'sessions'*/));
+    }
+
+    public function soumissionEns(){
+        $subjects=$this->Users->Subjects->newEntity();
+        $this->set(compact('subjects'));
+
+>>>>>>> master
 
     }
 
@@ -137,25 +165,15 @@ class UsersController extends AppController
     public function choisirSubject()
     {
         $id2 = $this->getRequest()->getSession()->read('id');
-
-
-
         $arraysubjects=array();
         $users=$this->Users->get($id2);
-
         $subjects=$this->Users->Subjects->get($this->getRequest()->getData('id'));
         array_push($arraysubjects,$subjects);
-
-
-
-
         $users->subjects=$arraysubjects;
-
-
         $this->Users->save($users);
-
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
+<<<<<<< HEAD
 =======
 
         //dd('coucou Ens');
@@ -168,5 +186,7 @@ class UsersController extends AppController
 //My name is !Yaaaaaaa
 >>>>>>> Yanis
 
+=======
+>>>>>>> master
     }
 }

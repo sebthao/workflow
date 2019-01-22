@@ -9,7 +9,7 @@
 namespace App\Controller;
 
 
-class SessionsController  extends AppController
+class PtutsessionsController  extends AppController
 {
     public function select()
     {

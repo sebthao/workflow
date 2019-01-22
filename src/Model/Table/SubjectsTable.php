@@ -17,6 +17,7 @@ class SubjectsTable extends Table
         parent::initialize($config);
         $this->hasOne('Groups');
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->belongsToMany('Users');
         $this->belongsToMany('Tags');
 =======
@@ -27,5 +28,11 @@ class SubjectsTable extends Table
 >>>>>>> Yanis
 
 >>>>>>> Yanis
+=======
+        $this->hasMany('Ptutsessions');
+        $this->belongsToMany('Users');
+        $this->belongsToMany('Tags');
+
+>>>>>>> master
     }
 }
