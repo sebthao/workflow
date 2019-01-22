@@ -79,11 +79,12 @@ class UsersController extends AppController
 
 
     public function affichageEns(){
-        dd($this->Users->Sessions->find()
-            ->select('id', 'date')
+        dd($this->Users->Ptutsessions->get(0));
+        /*dd($this->Users->Sessions->find()
+            ->select('id', 'date_event')
             ->where (['id ='=>2])
             ->all()
-        );
+        );*/
         //$sessions=$this->Users->Sessions->find();
         $subjects=$this->Users->Subjects->find()->all();
         /*$arraydate=array();

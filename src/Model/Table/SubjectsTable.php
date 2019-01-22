@@ -16,7 +16,7 @@ class SubjectsTable extends Table
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Groups');
-        $this->hasMany('Sessions');
+        $this->hasMany('Ptutsessions');
         $this->belongsToMany('Users');
         $this->belongsToMany('Tags');
 

@@ -18,7 +18,7 @@ class UsersTable extends Table
         parent::initialize($config);
         $this->hasOne('Groups');
         $this->belongsToMany('Roles');
-        $this->belongsToMany('Sessions');
+        $this->belongsToMany('Ptutsessions');
         $this->belongsToMany('Subjects');
 
     }
