@@ -82,8 +82,8 @@ class UsersController extends AppController
 
 
 
-        foreach($query as $q){
 
+        foreach($query as $q){
             $tmp = $q->lastname . " " . $q->firstname;
             array_push($profs,$tmp);
 
