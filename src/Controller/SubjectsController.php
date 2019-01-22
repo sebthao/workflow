@@ -56,7 +56,46 @@ class SubjectsController extends AppController
     $this->set(compact('subjects', 'tags'));
     }
 
+    public function addSubject(){
+        dd($this->getRequest()->getData());
+        $subjects = $this->Subjects->find();
+        if(!empty($this->getRequest()->getData())){
+            $subjects= $this->Subjects->newEntity($this->getRequest()->getData());
 
+            if ($this->Subjects->save($subjects)){
+                $this->Flash->success("Sujet créé");
+              //  $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
+            }else{
+                $this->Flash->error('erreur');
+               // $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
+            }
+        }
+        $this->redirect(['controller'=>'Users','action'=>'affichageEns']);
+     //   $this->set(compact('subjects'));
+    }
+
+    public function descriptionPtut(){
+        $subjects=$this->Subjects->find()->all();
+        $idmentors=$this->Subjects->Users->find()
+            ->all();
+        //dd($idmentors);
+        foreach ($subjects as $subject) {
+            if ($subject->id == $this->getRequest()->getData('id')) {
+                foreach($idmentors as $idmentor){
+                    //dd($idmentor);
+                    if ($idmentor->id==$subject->idUserMentor){
+                        $nomMentor= $idmentor->firstName." ".$idmentor->lastName;
+                        $this->set(compact('nomMentor'));
+                    }
+                }
+                $this->set(compact('subject'));
+            } else {}
+        }
+    }
+
+    public function setVisible(){
+
+    }
 
 
 }

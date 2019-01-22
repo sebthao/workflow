@@ -79,7 +79,7 @@ class UsersController extends AppController
 
 
     public function affichageEns(){
-        dd($this->Users->Ptutsessions->get(0));
+        //dd($this->Users->Ptutsessions->get(0));
         /*dd($this->Users->Sessions->find()
             ->select('id', 'date_event')
             ->where (['id ='=>2])
@@ -97,7 +97,9 @@ class UsersController extends AppController
     }
 
     public function soumissionEns(){
-        dd('coucou Ens');
+        $subjects=$this->Users->Subjects->newEntity();
+        $this->set(compact('subjects'));
+
 
     }
 
