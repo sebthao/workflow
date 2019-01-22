@@ -33,7 +33,7 @@ foreach ($subjects as $subject) {
     echo "Titre : ".$subject->title . "<br>";
     echo "Description : ".$subject->description . "<br>";
     echo substr($subject->description, 0, 50) . "...<br>";
-    
+
     echo "Enseignant : ".$subject->Enseignant."<br>";
 
     echo $this->Form->create($subject, ['url' => ['controller' => 'Users', 'action' => 'choisirSubject']]);

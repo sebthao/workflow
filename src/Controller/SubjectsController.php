@@ -23,10 +23,7 @@ class SubjectsController extends AppController
 
     $id = $this->getRequest()->getData('id');
 
-    if($id!=null){
-        $this->getRequest()->getSession()->write('id',$id);
-    }
-    $subjects = $this->Subjects->get($this->getRequest()->getSession()->read('id'));
+    $subjects = $this->Subjects->get($id);
 
     $query = $this->Subjects->Groups->Users
         ->find()
@@ -43,7 +40,7 @@ class SubjectsController extends AppController
 
     $tags=array();
 
-    $subjects = $this->Subjects->get($this->getRequest()->getSession()->read('id'));
+    $subjects = $this->Subjects->get($id);
     $query2=$this->Subjects->find()->contain(['Tags'])->all();
     foreach($query2 as $tag) {
         if ($tag->id == $this->getRequest()->getData('id')) {
