@@ -79,7 +79,7 @@ class UsersController extends AppController
 
 
     public function affichageEns(){
-        //dd($this->Users->Ptutsessions->get(0));
+        dd($this->Users->Ptutsessions->find()->all());
         /*dd($this->Users->Sessions->find()
             ->select('id', 'date_event')
             ->where (['id ='=>2])
@@ -116,4 +116,10 @@ class UsersController extends AppController
         $this->Flash->success('Choix bien enregistré');
         return $this->redirect('/Users/affichageEtu');
     }
+
+    public function test(){
+        $user= $this->Users->newEntity();
+        $this->set(compact('user'));
+    }
 }
+
