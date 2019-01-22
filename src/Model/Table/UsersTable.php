@@ -16,7 +16,8 @@ class UsersTable extends Table
     public function initialize(array $config){
         parent::initialize($config);
         $this->hasOne('Groups');
-        $this->belongsToMany('Subjects');
+        $this->belongsToMany('Subjects', ['through'=>'SubjectsUsers']);
+        $this->hasMany('SubjectsUsers');
     }
 
 }

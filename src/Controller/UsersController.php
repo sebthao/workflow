@@ -117,9 +117,6 @@ class UsersController extends AppController
 
             }
 
-
-
-
             if ($this->Users->Subjects->save($subject)) {
 
                 $this->Flash->success('Sauvegardé');
@@ -132,8 +129,6 @@ class UsersController extends AppController
         }
 
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-
-
 
 
         $this->set(compact('subject','user','profs'));
@@ -176,24 +171,19 @@ class UsersController extends AppController
     {
         $id2 = $this->getRequest()->getSession()->read('id');
 
+        $query = $this->Users->SubjectsUsers->find()->select('id', 'subject_id','user_id')->where (['user_id ='=>$id2])->all();
+
+        $rank = $query->count()+1;
 
 
-        $arraysubjects=array();
-        $users=$this->Users->get($id2);
+        $subuser=$this->Users->SubjectsUsers->newEntity();
+        $subuser->subject_id=$this->getRequest()->getData('id');
+        $subuser->user_id=$id2;
+        $subuser->rank=$rank;
+        $this->Users->SubjectsUsers->save($subuser);
+        
 
-        $subjects=$this->Users->Subjects->get($this->getRequest()->getData('id'));
-        array_push($arraysubjects,$subjects);
-
-
-
-
-        $users->subjects=$arraysubjects;
-
-
-        $this->Users->save($users);
-
-        $this->Flash->success('Choix bien enregistré');
-        return $this->redirect('/Users/affichageEtu');
+        return $this->redirect('/Users/affichageEtuChoix');
 
     }
 }
