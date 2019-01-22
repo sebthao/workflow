@@ -16,7 +16,7 @@ foreach ($subjects as $subject){
 
     echo $this->Form->create($subject, ['url' => ['controller' => 'Subjects', 'action' => 'setVisible']]);
     echo $this->Form->hidden('id', [$subject->id]);
-    echo $this->Form->button('Soumettre');
+    echo $this->Form->button('Rendre Visible');
     echo $this->Form->end();
     echo"<br>";
 }

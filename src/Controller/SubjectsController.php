@@ -57,10 +57,14 @@ class SubjectsController extends AppController
     }
 
     public function addSubject(){
-        dd($this->getRequest()->getData());
+        dd($this->getRequest());
         $subjects = $this->Subjects->find();
         if(!empty($this->getRequest()->getData())){
-            $subjects= $this->Subjects->newEntity($this->getRequest()->getData());
+            $subjects= $this->Subjects->newEntity('',
+                                                $this->getRequest()->getData('Titre'),
+                                                $this->getRequest()->getData('Titre')
+
+                );
 
             if ($this->Subjects->save($subjects)){
                 $this->Flash->success("Sujet créé");
