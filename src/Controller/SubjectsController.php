@@ -54,25 +54,22 @@ class SubjectsController extends AppController
     }
 
     public function addSubject(){
-        dd($this->getRequest());
-        $subjects = $this->Subjects->find();
         if(!empty($this->getRequest()->getData())){
-            $subjects= $this->Subjects->newEntity('',
-                                                $this->getRequest()->getData('Titre'),
-                                                $this->getRequest()->getData('Titre')
-
-                );
-
+            $subjects= $this->Subjects->newEntity();
+            $subjects->idSession = 1;
+            $subjects->title =$this->getRequest()->getData('Titre') ;
+            $subjects->description = $this->getRequest()->getData('Description');
+            $subjects->idUserMentor = $this->getRequest()->getSession()->read('id');
+            $subjects->idUserCre= $this->getRequest()->getSession()->read('id');
             if ($this->Subjects->save($subjects)){
                 $this->Flash->success("Sujet créé");
-              //  $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
+                $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
             }else{
                 $this->Flash->error('erreur');
-               // $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
+                // $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
             }
         }
         $this->redirect(['controller'=>'Users','action'=>'affichageEns']);
-     //   $this->set(compact('subjects'));
     }
 
     public function descriptionPtut(){
@@ -95,14 +92,7 @@ class SubjectsController extends AppController
     }/*un turc con*/
 
     public function setVisible(){
-
+        
     }
 
-
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> remotes/origin/Marie
 }
