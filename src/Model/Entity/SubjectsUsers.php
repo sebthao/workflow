@@ -12,4 +12,6 @@ namespace App\Model\Entity;
 class SubjectsUsers extends Entity
 {
 
+
+
 }

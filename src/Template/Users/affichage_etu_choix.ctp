@@ -1,6 +1,31 @@
 <?php
 
 
+$int =1;
+$cpt=$query2->count();
+
+
+/*while($cpt!=0){
+    foreach ($query2 as $q){
+        if($q->rank == $int){
+           foreach ($subjects as $subject){
+               if($subject->id ==$q->subject_id){
+                   echo 'choix n°'.$int.' : ';
+                   echo $subject->title ;
+                   echo '<br>';
+                   $int = $int+1;
+                   $cpt = $cpt-1;
+               }
+           }
+        }
+    }
+}*/
+
+
+
+
+
+
 echo $this->Form->create($users,['url' => ['controller' => 'Users', 'action' => 'afficheEtuChoix']]);
 echo $this->Form->control('search',['label' => 'Recherche']);
 echo $this->Form->button('Rechercher');

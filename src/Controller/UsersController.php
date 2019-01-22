@@ -10,6 +10,8 @@ namespace App\Controller;
 
 
 use App\Controller\SubjectsController;
+use Cake\ORM\ResultSet;
+use PhpParser\Node\Expr\Array_;
 
 class UsersController extends AppController
 {
@@ -140,6 +142,16 @@ class UsersController extends AppController
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
 
+
+        $query2=$this->Users->SubjectsUsers
+            ->find()
+            ->where(['user_id ='=> $this->getRequest()->getSession()->read('id')])
+            ->all();
+
+
+
+
+
         foreach ($subjects as $subject){
 
 
@@ -158,14 +170,13 @@ class UsersController extends AppController
 
         }
 
-        $this->set(compact('users', 'subjects'));
+        $this->set(compact('users', 'subjects', 'query2'));
     }
 
     public function affichageEns(){
         dd('coucou Ens');
 
     }
-
 
     public function choisirSubject()
     {
@@ -175,13 +186,39 @@ class UsersController extends AppController
 
         $rank = $query->count()+1;
 
+        $queryDuplicate = $this->Users->SubjectsUsers->find()
+            ->where(['user_id ='=>$this->getRequest()->getSession()->read('id'), 'subject_id ='=>$this->getRequest()->getData('id')])
+            ->toArray();
 
-        $subuser=$this->Users->SubjectsUsers->newEntity();
-        $subuser->subject_id=$this->getRequest()->getData('id');
-        $subuser->user_id=$id2;
-        $subuser->rank=$rank;
-        $this->Users->SubjectsUsers->save($subuser);
-        
+
+        $queryAll = $this->Users->SubjectsUsers->find()
+            ->where(['user_id ='=>$this->getRequest()->getSession()->read('id')])
+            ->all();
+
+
+        if(empty($queryDuplicate)){
+
+
+            $subuser=$this->Users->SubjectsUsers->newEntity();
+            $subuser->subject_id=$this->getRequest()->getData('id');
+            $subuser->user_id=$id2;
+            $subuser->rank=$rank;
+            $this->Users->SubjectsUsers->save($subuser);
+
+        }
+        else {
+            foreach ($queryDuplicate as $q){
+                $ranktmp=$q->rank;
+                $q->rank = $rank-1;
+                $this->Users->SubjectsUsers->save($q);
+            }
+            foreach ($queryAll as $q2){
+                if($q2->rank>$ranktmp){
+                    $q2->rank=$q2->rank-1;
+                    $this->Users->SubjectsUsers->save($q2);
+                }
+            }
+        }
 
         return $this->redirect('/Users/affichageEtuChoix');
 
