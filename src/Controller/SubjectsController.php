@@ -91,7 +91,7 @@ class SubjectsController extends AppController
                 $this->set(compact('subject'));
             } else {}
         }
-    }
+    }/*un turc con*/
 
     public function setVisible(){
 
