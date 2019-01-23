@@ -20,30 +20,37 @@ class UsersController extends AppController
     public function index(){
 
         //configure la base de donnée
-        $users=$this->Users->find();
+        $users=$this->Users->find()->all();
         if($this->getRequest()->getData() != null){
+            $arrUser=array();
             $query = $this->Users
                 ->find()
+                ->contain(['Roles'])
                 ->where (['userName =' => $this->getRequest()->getData('userName'),'password =' => $this->getRequest()->getData('password')])
                 ->all();
-
+            foreach ($query as $q){
+                array_push($arrUser, $q);
+            }
+            $arrRole=array();
+            foreach ($arrUser as $au){
+                foreach ($au->roles as $ar){
+                    array_push($arrRole, $ar);
+                }
+            }
             $bool = false;
             foreach ($query as $user){
                 $bool=true;
             }
             if($bool){
-
-                foreach($query as $user){
-                    $this->getRequest()->getSession()->write('id',$user->id);
-                    if($user->idRole==1){
+                foreach ($arrRole as $aR){
+                    if($aR->id==1){
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
-                    else if($user->idRole==2){
+                    else if($aR->id==2){
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
                     }
                     else{
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtuChoix']);
-
                     }
                 }
             }
