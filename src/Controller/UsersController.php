@@ -117,21 +117,21 @@ class UsersController extends AppController
         $test=true;
         $i=0;
         $n=$i;
-        $this->getRequest()->getData('Promotion'.($i+1));
-        foreach ($this->getRequest()->getData('Promotion'.$i) as $oui){
-            if ($i<>4){
-                while($oui<>$this->getRequest()->getData('Promotion'.($i+1))){
-                    $i=$i+1;
-                }
-                if($oui==$this->getRequest()->getData('Promotion'.($i+1))){$test=false;}
+        while ($i<4){
+            while ($this->getRequest()->getData('Promotion' . $i) <> $this->getRequest()->getData('Promotion' . ($i + 1))) {
+                $i = $i + 1;
             }
-            $i=$n;
-            $i=$i+1;
+            if ($this->getRequest()->getData('Promotion' . $i) == $this->getRequest()->getData('Promotion' . ($i + 1))) {
+                $test = false;
+            }
+            $n = $n + 1;
+            $i = $n;
         }
+        //dd($test);
         if ($test==true){
-            return $this->redirect('/Users/affichageEns');
+            return $this->redirect('affichageEns');
         }else{
-            return $this->redirect('/Groups/choix');
+            return $this->redirect('/Groups/add');
         }
     }
 }
