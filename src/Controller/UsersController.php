@@ -66,9 +66,7 @@ class UsersController extends AppController
                 ->select(['lastname', 'firstname'])
                 ->where(['id =' => $subject->idUserMentor])
                 ->all();
-            dd($query);
             $subject->Enseignant = $query->lastaname . " " . $query->firstname;
-            dd($subject);
             $this->set(compact('users', 'subjects'));
             foreach($query as $q){
                 $subject->Enseignant = $q->lastname . " " . $q->firstname;
@@ -79,21 +77,14 @@ class UsersController extends AppController
 
 
     public function affichageEns(){
-        //dd($this->Users->Ptutsessions->find()->all());
-        /*dd($this->Users->Sessions->find()
-            ->select('id', 'date_event')
-            ->where (['id ='=>2])
-            ->all()
-        );*/
-        //$sessions=$this->Users->Sessions->find();
+        $sessions=$this->Users->PtutSessions->find();
         $subjects=$this->Users->Subjects->find()->all();
-        /*$arraydate=array();
+        $arraydate=array();
 
         foreach ($sessions as $session){
             array_push($arraydate,$session->date);
        }
-       dd($arraydate);*/
-        $this->set(compact('subjects'/*,'sessions'*/));
+        $this->set(compact('subjects','sessions'));
     }
 
     public function soumissionEns(){
