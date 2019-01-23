@@ -15,10 +15,13 @@ class UsersTable extends Table
 {
     public function initialize(array $config){
         parent::initialize($config);
-        $this->belongsTo('Groups');
+
+        
+
         $this->belongsToMany('Subjects', ['through'=>'SubjectsUsers']);
         $this->hasMany('SubjectsUsers');
-        $this->belongsToMany('Promotions');
+        $this->hasOne('Groups');
+        $this->hasOne('Roles');
+        $this->belongsToMany('Ptutsessions');
     }
-
 }

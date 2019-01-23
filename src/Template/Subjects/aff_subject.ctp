@@ -7,11 +7,6 @@
     foreach($tags as $tag){
         echo "- ".$tag->name.'<br>';
     }
-
-
-
-
-
     echo $this->Form->create($subjects,['controller' => 'Users', 'url' => '/Users/affichageEtuChoix']);
     echo $this->Form->button('Retour');
     echo $this->Form->end();

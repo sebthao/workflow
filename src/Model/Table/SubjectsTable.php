@@ -19,5 +19,6 @@ class SubjectsTable extends Table
         $this->belongsToMany('Promotions');
         $this->belongsToMany('Users', ['through'=>'SubjectsUsers']);
         $this->belongsToMany('Tags');
+        $this->hasMany('Ptutsessions');
     }
 }
