@@ -117,6 +117,14 @@ class UsersController extends AppController
         $test=true;
         $i=0;
         $n=$i;
+        echo $this->getRequest()->getData('Promotion'.'0');
+        echo "<br>";
+        echo $this->getRequest()->getData('Promotion'.'1');
+        echo "<br>";
+        echo $this->getRequest()->getData('Promotion'.'2');
+        echo "<br>";
+        echo $this->getRequest()->getData('Promotion'.'3');
+        echo "<br>";
         while ($i<4){
             while ($this->getRequest()->getData('Promotion' . $i) <> $this->getRequest()->getData('Promotion' . ($i + 1))) {
                 $i = $i + 1;
@@ -127,7 +135,7 @@ class UsersController extends AppController
             $n = $n + 1;
             $i = $n;
         }
-        //dd($test);
+        dd($test);
         if ($test==true){
             return $this->redirect('affichageEns');
         }else{
