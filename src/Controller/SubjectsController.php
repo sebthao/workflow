@@ -57,15 +57,13 @@ class SubjectsController extends AppController
     }
 
     public function addSubject(){
-        dd($this->getRequest());
+        dd($this->getRequest()->getSession()->read('id'));
         $subjects = $this->Subjects->find();
         if(!empty($this->getRequest()->getData())){
-            $subjects= $this->Subjects->newEntity('',
-                                                $this->getRequest()->getData('Titre'),
-                                                $this->getRequest()->getData('Titre')
-
-                );
-
+            $subjects->title=$this->getRequest()->getData('Titre');
+            $subjects->description=$this->getRequest()->getData('Description');
+            $subjects->idUserCre=$this->getRequest()->getSession()->read('id');
+            $subjects->idUserMentor=$this->getRequest()->getSession()->read('id');
             if ($this->Subjects->save($subjects)){
                 $this->Flash->success("Sujet créé");
               //  $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
