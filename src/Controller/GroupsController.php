@@ -19,8 +19,9 @@ class GroupsController extends AppController
 
     public function choix()
     {
+        $nbetu=$this->getRequest()->getData('number');
         $etudiants = $this->Groups->Users->find()->all();
-        $this->set(compact('etudiants'));
+        $this->set(compact('etudiants','nbetu'));
     }
 
 }

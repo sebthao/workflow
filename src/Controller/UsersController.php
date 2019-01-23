@@ -112,5 +112,27 @@ class UsersController extends AppController
         $user= $this->Users->newEntity();
         $this->set(compact('user'));
     }
+
+    public function verification(){
+        $test=true;
+        $i=0;
+        $n=$i;
+        $this->getRequest()->getData('Promotion'.($i+1));
+        foreach ($this->getRequest()->getData('Promotion'.$i) as $oui){
+            if ($i<>4){
+                while($oui<>$this->getRequest()->getData('Promotion'.($i+1))){
+                    $i=$i+1;
+                }
+                if($oui==$this->getRequest()->getData('Promotion'.($i+1))){$test=false;}
+            }
+            $i=$n;
+            $i=$i+1;
+        }
+        if ($test==true){
+            return $this->redirect('/Users/affichageEns');
+        }else{
+            return $this->redirect('/Groups/choix');
+        }
+    }
 }
 
