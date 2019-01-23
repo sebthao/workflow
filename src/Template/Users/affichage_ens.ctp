@@ -19,8 +19,7 @@ foreach ($subjects as $subject){
     echo $this->Form->button('Rendre Visible');
     echo $this->Form->end();
 
-    echo $this->Form->create($subject, ['url' => ['controller' => 'Subjects', 'action' => 'addEtuInSubject']]);
-    echo $this->Form->hidden('id', [$subject->id]);
+    echo $this->Form->create($subject, ['url' => ['controller' => 'Groups', 'action' => 'add']]);
     echo $this->Form->button('Ajouter Groupe');
     echo $this->Form->end();
     echo"<br>";

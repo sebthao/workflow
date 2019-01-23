@@ -80,8 +80,7 @@ class SubjectsController extends AppController
 
     public function descriptionPtut(){
         $subjects=$this->Subjects->find()->all();
-        $idmentors=$this->Subjects->Users->find()
-            ->all();
+        $idmentors=$this->Subjects->Users->find()->all();
         //dd($idmentors);
         foreach ($subjects as $subject) {
             if ($subject->id == $this->getRequest()->getData('id')) {
@@ -100,10 +99,4 @@ class SubjectsController extends AppController
     public function setVisible(){
 
     }
-
-    public function addEtuInSubject(){
-        $etudiants=$this->Subjects->Users->find()->all();
-        dd($etudiants);
-    }
-
 }
