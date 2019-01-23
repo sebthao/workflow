@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: p1700788
- * Date: 16/01/2019
- * Time: 15:59
+ * User: p1601402
+ * Date: 21/01/2019
+ * Time: 14:31
  */
 
 namespace App\Model\Table;
@@ -11,13 +11,11 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class SubjectsTable extends Table
+class PromotionsTable extends Table
 {
     public function initialize(array $config){
         parent::initialize($config);
-        $this->hasOne('Groups');
-        $this->hasMany('Ptutsession');
         $this->belongsToMany('Users');
-        $this->belongsToMany('Tags');
+        $this->hasMany('PtutsessionsPromotions');
     }
 }

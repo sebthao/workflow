@@ -10,39 +10,41 @@ namespace App\Controller;
 
 
 use App\Controller\SubjectsController;
-use App\Model\Entity\Sessions;
+use App\Model\Entity\Ptutsessions;
 use App\Model\Entity\Users;
 
 class UsersController extends AppController
 {
 
-    public function index(){
+    public function index()
+    {
 //configure la base de donnée
 
 
-        $users=$this->Users->find();
+        $users = $this->Users->find();
 
 
-        if($this->getRequest()->getData() != null){
+        if ($this->getRequest()->getData() != null) {
 
             $query = $this->Users
                 ->find()
-                ->where (['userName =' => $this->getRequest()->getData('userName'),'password =' => $this->getRequest()->getData('password')])
+                ->where(['userName =' => $this->getRequest()->getData('userName'), 'password =' => $this->getRequest()->getData('password')])
                 ->all();
 
             $bool = false;
-            foreach($query as $user){
+            foreach ($query as $user) {
                 $bool = true;
             }
-            if($bool){
-                foreach($query as $user){
-                    if($user->idRole==1){
+            if ($bool) {
+                foreach ($query as $user) {
+                    $this->getRequest()->getSession()->write('id',$user->id);
+                    if ($user->idRole == 1) {
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
-                    else if($user->idRole==2){
+                    else if ($user->idRole == 2) {
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
                     }
-                    else{
+                    else {
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEtu']);
                     }
                 }
@@ -50,27 +52,50 @@ class UsersController extends AppController
             }
 
 
-
-
         }
 
         $this->set(compact('users'));
-        
-    }
-
-    public function affichageAdmin(){
-        $users=$this->Users->find();
-        $sessions=$this->Users->Sessions->find()->all();
-        $this->set(compact('users','sessions'));
 
     }
 
-    public function affichageEtu(){
-        $users=$this->Users->find();
+    public function js()
+    {
+        $u = 0;
+        $this->set(compact('u'));
+    }
 
-        $subjects=$this->Users->Groups->Subjects->find()->all();
+    public function affichageAdmin()
+    {
+        $users = $this->Users->find();
 
-        foreach ($subjects as $subject){
+        $promos = $this->Users->Promotions->find()->toArray();
+
+
+        $sessions = $this->Users->Ptutsessions->find()->all();
+
+        foreach ($sessions as $session) {
+            foreach ($promos as $promo) {
+
+
+            }
+
+        }
+
+
+        //dd($sessions);
+
+
+        $this->set(compact('users', 'sessions', 'promos'));
+
+    }
+
+    public function affichageEtu()
+    {
+        $users = $this->Users->find();
+
+        $subjects = $this->Users->Groups->Subjects->find()->all();
+
+        foreach ($subjects as $subject) {
 
 
             $query = $this->Users
@@ -86,19 +111,27 @@ class UsersController extends AppController
         }
 
 
-
-
-
-
         $this->set(compact('users', 'subjects'));
 
 
     }
 
-    public function affichageEns(){
+    public function affichageEns()
+    {
+        //dd($this->Users->Ptutsessions->find()->all());
+        /*dd($this->Users->Sessions->find()
+            ->select('id', 'date_event')
+            ->where (['id ='=>2])
+            ->all()
+        );*/
+        //$sessions=$this->Users->Sessions->find();
+        $subjects = $this->Users->Subjects->find()->all();
+        /*$arraydate=array();
 
-        dd('coucou Ens');
-//My name is !Yaaaaaaa
-
+        foreach ($sessions as $session){
+            array_push($arraydate,$session->date);
+       }
+       dd($arraydate);*/
+        $this->set(compact('subjects'/*,'sessions'*/));
     }
 }

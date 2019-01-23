@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: p1601402
- * Date: 21/01/2019
- * Time: 09:50
+ * Date: 23/01/2019
+ * Time: 09:39
  */
 
 namespace App\Model\Entity;
 
 
-class Sessions extends Entity
+class Tags extends Entity
 {
 
 }
