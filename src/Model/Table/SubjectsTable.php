@@ -19,5 +19,6 @@ class SubjectsTable extends Table
         $this->hasMany('Ptutsession');
         $this->belongsToMany('Users');
         $this->belongsToMany('Tags');
+        $this->hasMany('Sessions');
     }
 }

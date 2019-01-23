@@ -9,9 +9,13 @@
 namespace App\Controller;
 
 
+
 use App\Controller\SubjectsController;
 use App\Model\Entity\Ptutsessions;
 use App\Model\Entity\Users;
+
+use App\Model\Entity\Sessions;
+
 
 class UsersController extends AppController
 {
@@ -92,10 +96,14 @@ class UsersController extends AppController
     public function affichageEtu()
     {
         $users = $this->Users->find();
+    public function affichageEtu(){
+
+        $users=$this->Users->find();
 
         $subjects = $this->Users->Groups->Subjects->find()->all();
 
         foreach ($subjects as $subject) {
+
 
 
             $query = $this->Users
@@ -110,8 +118,10 @@ class UsersController extends AppController
             dd($subject);
         }
 
-
         $this->set(compact('users', 'subjects'));
+
+
+        dd('coucou Etu');
 
 
     }
@@ -133,5 +143,13 @@ class UsersController extends AppController
        }
        dd($arraydate);*/
         $this->set(compact('subjects'/*,'sessions'*/));
+    public function affichageEns(){
+
+        //dd('coucou Ens');
+
+    }
+
+    public function soumissionEns(){
+        dd('coucou Ens');
     }
 }

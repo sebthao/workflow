@@ -19,6 +19,6 @@ class UsersTable extends Table
         $this->belongsToMany('Ptutsessions');
         $this->belongsToMany('Promotions');
         $this->belongsToMany('Subjects');
+        $this->hasOne('Roles');
     }
-
 }
