@@ -17,7 +17,7 @@ class SubjectsController extends AppController
         $subjects = $this->Subjects->find()->all();
 
     }
-
+//////////////////////////////////////////////////////////////////Etudiant////////////////////////////////////////////////////////////////////
 
     public function affSubject(){
 
@@ -52,7 +52,7 @@ class SubjectsController extends AppController
 
     $this->set(compact('subjects', 'tags'));
     }
-
+/////////////////////////////////////////////////////////////////////////Enseignant//////////////////////////////////////////////////////////////////////
     public function addSubject(){
         if(!empty($this->getRequest()->getData())){
             $subjects= $this->Subjects->newEntity();

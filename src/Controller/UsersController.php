@@ -10,14 +10,13 @@ namespace App\Controller;
 
 
 use App\Controller\SubjectsController;
-use Cake\ORM\ResultSet;
-use PhpParser\Node\Expr\Array_;
 use App\Model\Entity\Sessions;
-use App\Model\Entity\Users;
 
 class UsersController extends AppController
 {
 
+
+    ////////////////////////////////////Tout le monde/////////////////////
     public function index(){
         //configure la base de donnée
         $users=$this->Users->find();
@@ -48,15 +47,9 @@ class UsersController extends AppController
                 }
             }
         }
-       $this->set(compact('users'));
+        $this->set(compact('users'));
     }
 
-    public function affichageAdmin(){
-        $users=$this->Users->find();
-        $sessions=$this->Users->Sessions->find()->all();
-        $this->set(compact('users','sessions'));
-
-    }
 
     public function ptutsessionFinie(){
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
@@ -65,7 +58,7 @@ class UsersController extends AppController
             ->toArray();
 
 
-        
+
 
         $query2 = $this->Users->Promotions->Ptutsessions->Status
             ->find()
@@ -77,13 +70,10 @@ class UsersController extends AppController
     }
 
 
+    ////////////////////////////////////Etudiant//////////////////////////
     public function formulaireSoumission(){
         $subject = $this->Users->Subjects->find();
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-        $profs= array();
-        $query = $this->Users
-            ->find()
-
         $profs= array();
         $query = $this->Users
             ->find()
@@ -99,9 +89,6 @@ class UsersController extends AppController
             $subject->title = $this->getRequest()->getData('title');
             $subject->description =$this->getRequest()->getData('content');
             $subject->idSession =1;
-
-            $subject->idUserCre = $user->id;
-
             $subject->idUserCre = $user ->id;
             $subject->idUserMentor = 4;
             $int =-1;
@@ -126,9 +113,6 @@ class UsersController extends AppController
             }
         }
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-
-        $this->set(compact('subject','user', 'profs'));
-
         $this->set(compact('subject','user','profs'));
     }
 
@@ -137,64 +121,21 @@ class UsersController extends AppController
     public function affichageEtuChoix(){
         $users=$this->Users->find();
         $subjects=$this->Users->Groups->Subjects->find()->all();
-
-
-
         $query2=$this->Users->SubjectsUsers
             ->find()
             ->where(['user_id ='=> $this->getRequest()->getSession()->read('id')])
             ->all();
-
         foreach ($subjects as $subject){
-            $query2=$this->Users->SubjectsUsers
-                ->find()
-                ->where(['user_id ='=> $this->getRequest()->getSession()->read('id')])
-                ->all();
-            foreach ($subjects as $subject){
                 $query = $this->Users
                     ->find()
                     ->select(['lastname', 'firstname'])
                     ->where(['id =' => $subject->idUserMentor])
                     ->toArray();
-
-                foreach ($query as $q){
-
-                    $subject->Enseignant = $q->lastname . " " . $q->firstname;
-
-                }
-
-
-            }
-            $this->set(compact('users', 'subjects'));
             foreach($query as $q){
                 $subject->Enseignant = $q->lastname . " " . $q->firstname;
             }
         }
         $this->set(compact('users', 'subjects', 'query2'));
-    }
-
-    public function affichageEns(){
-        //dd($this->Users->Ptutsessions->get(0));
-        /*dd($this->Users->Sessions->find()
-            ->select('id', 'date_event')
-            ->where (['id ='=>2])
-            ->all()
-        );*/
-        //$sessions=$this->Users->Sessions->find();
-        $subjects=$this->Users->Subjects->find()->all();
-        /*$arraydate=array();
-
-        foreach ($sessions as $session){
-            array_push($arraydate,$session->date);
-       }
-       dd($arraydate);*/
-        $this->set(compact('subjects'/*,'sessions'*/));
-    }
-
-    public function soumissionEns(){
-        $subjects=$this->Users->Subjects->newEntity();
-        $this->set(compact('subjects'));
-
     }
 
     public function choisirSubject()
@@ -234,5 +175,43 @@ class UsersController extends AppController
 
     }
 
+
+
+    ////////////////////////////////////Enseignant////////////////////////////
+
+    public function affichageEns(){
+        //dd($this->Users->Ptutsessions->get(0));
+        /*dd($this->Users->Sessions->find()
+            ->select('id', 'date_event')
+            ->where (['id ='=>2])
+            ->all()
+        );*/
+        //$sessions=$this->Users->Sessions->find();
+        $subjects=$this->Users->Subjects->find()->all();
+        /*$arraydate=array();
+
+        foreach ($sessions as $session){
+            array_push($arraydate,$session->date);
+       }
+       dd($arraydate);*/
+        $this->set(compact('subjects'/*,'sessions'*/));
+    }
+
+    public function soumissionEns(){
+        $subjects=$this->Users->Subjects->newEntity();
+        $this->set(compact('subjects'));
+
+    }
+
+
+
+    ////////////////////////////////////Administrateur///////////////////////
+
+    public function affichageAdmin(){
+        $users=$this->Users->find();
+        $sessions=$this->Users->Sessions->find()->all();
+        $this->set(compact('users','sessions'));
+
+    }
 
 }
