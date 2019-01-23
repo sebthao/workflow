@@ -17,11 +17,10 @@ class UsersTable extends Table
         parent::initialize($config);
 
         
-
+        $this->belongsToMany('Promotions');
         $this->belongsToMany('Subjects', ['through'=>'SubjectsUsers']);
         $this->hasMany('SubjectsUsers');
-        $this->hasOne('Groups');
-        $this->hasOne('Roles');
-        $this->belongsToMany('Ptutsessions');
+        $this->belongsTo('Groups');
+        $this->belongsToMany('Roles');
     }
 }

@@ -15,7 +15,7 @@ class PtutsessionsTable extends Table
 {
     public function initialize(array $config){
         parent::initialize($config);
-        $this->hasMany('Promotions');
+        $this->belongsTo('Promotions');
         $this->belongsTo('Status');
 
     }

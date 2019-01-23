@@ -27,9 +27,6 @@ class UsersController extends AppController
                 ->all();
 
             $bool = false;
-            foreach($query as $user){
-                $bool = true;
-            }
             if($bool){
 
                 foreach($query as $user){
@@ -53,19 +50,61 @@ class UsersController extends AppController
 
     public function ptutsessionFinie(){
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-        $query = $this->Users->Promotions->Ptutsessions
+
+///////Obtenir l'id des Promo ou l'user appartient
+        $idpromo = array();
+        $quer = $this->Users
             ->find()
+            ->contain(['Promotions'])
+            ->where(['id =' =>$user->id])
             ->toArray();
 
 
+        foreach ($quer as $qu){
+
+            foreach ($qu->promotions as $qp){
+                array_push($idpromo, $qp);
+            }
+        }
+
+///////////////////////Obtenir les sessions selon les id de promos/////////////////
+
+        $sess =array();
+        foreach ($idpromo as $idp){
+
+            $query = $this->Users->Promotions->Ptutsessions
+                ->find()
+                ->where(['promotion_id ='=>$idp->id])
+                ->toArray();
+
+            foreach ($query as $q){
+                array_push($sess, $q);
+            }
+        }
 
 
-        $query2 = $this->Users->Promotions->Ptutsessions->Status
-            ->find()
-            ->toArray();
+////////////////////Obtenir le statuts selon l'id des sessions////////////////
+        $stat =array();
+        foreach ($sess as $s){
+            $query2 = $this->Users->Promotions->Ptutsessions->Status
+                ->find()
+                ->where(['id ='=>$s->statu_id])
+                ->toArray();
+            foreach ($query2 as $q){
+                array_push($stat, $q);
+            }
+        }
 
 
-        $this->set(compact('query','user', 'query2'));
+
+
+
+
+
+
+
+
+        $this->set(compact('user', 'idpromo', 'sess', 'stat'));
 
     }
 
