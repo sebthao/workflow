@@ -18,6 +18,7 @@ class UsersController extends AppController
 
     ////////////////////////////////////Tout le monde/////////////////////
     public function index(){
+
         //configure la base de donnée
         $users=$this->Users->find();
         if($this->getRequest()->getData() != null){
@@ -27,6 +28,9 @@ class UsersController extends AppController
                 ->all();
 
             $bool = false;
+            foreach ($query as $user){
+                $bool=true;
+            }
             if($bool){
 
                 foreach($query as $user){
