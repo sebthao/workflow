@@ -16,7 +16,7 @@ class PromotionsTable extends Table
         parent::initialize($config);
 
         $this->belongsToMany('Users');
-        $this->hasMany('Sessions');
+        $this->belongsTo('Ptutsessions');
     }
 
 

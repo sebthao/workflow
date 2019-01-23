@@ -9,7 +9,7 @@
 namespace App\Model\Entity;
 
 
-class Sessions extends Entity
+class Ptutsessions extends Entity
 {
 
 }

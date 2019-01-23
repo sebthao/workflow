@@ -60,80 +60,77 @@ class UsersController extends AppController
         
     }
 
+
+
+
     public function affichageAdmin(){
         dd('coucou Admin');
 
     }
 
+    public function ptutsessionFinie(){
+        $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
+        $query = $this->Users->Promotions->Ptutsessions
+            ->find()
+            ->toArray();
+
+
+        
+
+        $query2 = $this->Users->Promotions->Ptutsessions->Status
+            ->find()
+            ->toArray();
+
+
+        $this->set(compact('query','user', 'query2'));
+
+    }
+
+
     public function formulaireSoumission(){
         $subject = $this->Users->Subjects->find();
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-
-
         $profs= array();
-
-
         $query = $this->Users
             ->find()
             ->select(['lastname', 'firstname'])
             ->where(['idRole =' => 2])
             ->all();
-
-
-
-
-
         foreach($query as $q){
             $tmp = $q->lastname . " " . $q->firstname;
             array_push($profs,$tmp);
 
         }
-
-
         if(!empty($this->getRequest()->getData())) {
-
             $subject = $this->Users->Subjects->newEntity();
             $subject->title = $this->getRequest()->getData('title');
             $subject->description = $this->getRequest()->getData('content');
             $subject->idSession =1;
-
             $subject->idUserCre = $user->id;
-
             $subject->idUserMentor = 4;
             $int =-1;
             $tmp = $this->getRequest()->getData('mentor');
-
-
             $query = $this->Users
                 ->find()
                 ->select(['id', 'lastname', 'firstname'])
                 ->where(['idRole =' => 2])
                 ->all();
-
             foreach ($query as $q){
                 $int = $int +1;
                 if($int == $tmp){
                     $subject->idUserMentor = $q->id;
                 }
-
-
             }
-
             if ($this->Users->Subjects->save($subject)) {
-
                 $this->Flash->success('Sauvegardé');
                 $this->getRequest()->getSession()->write('subject', $subject);
                 return $this->redirect('/Users/affichage_etu_choix');
             } else {
                 $this->Flash->error('erreur');
             }
-
         }
-
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-
-
-        $this->set(compact('subject','user','profs'));
+        $this->set(compact('subject','user', 'profs'));
     }
 
 
@@ -147,10 +144,6 @@ class UsersController extends AppController
             ->find()
             ->where(['user_id ='=> $this->getRequest()->getSession()->read('id')])
             ->all();
-
-
-
-
 
         foreach ($subjects as $subject){
 

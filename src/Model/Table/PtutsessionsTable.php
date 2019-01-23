@@ -11,11 +11,12 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class SessionsTable extends Table
+class PtutsessionsTable extends Table
 {
     public function initialize(array $config){
         parent::initialize($config);
-        $this->hasOne('Promotions');
+        $this->hasMany('Promotions');
+        $this->belongsTo('Status');
 
     }
 

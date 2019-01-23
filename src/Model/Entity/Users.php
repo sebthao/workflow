@@ -9,9 +9,6 @@
 namespace App\Model\Entity;
 
 
-class Users extends Entity
-{
+class Users extends Entity{
 
-
-
-    }
+}

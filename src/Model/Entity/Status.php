@@ -1,16 +1,17 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: p1601402
- * Date: 19/12/2018
- * Time: 17:36
+ * User: p1700788
+ * Date: 23/01/2019
+ * Time: 10:16
  */
 
 namespace App\Model\Entity;
 
+
 use Cake\ORM\Entity;
 
-class Roles extends Entity
+class Status extends Entity
 {
 
 }
