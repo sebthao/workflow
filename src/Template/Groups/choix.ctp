@@ -6,11 +6,11 @@ echo $this->Form->end();
 
 
 echo $this->Form->create($etudiants,['url'=>['controller'=>'Users','action'=>'verification']]);
-$array=array();
+echo $this->Form->hidden('nbetu',['value'=>$nbetu]);
 foreach ($etudiants as $etudiant){
-    $nomEtu=$etudiant->firstName." ".$etudiant->lastName;
-    array_push($array,$nomEtu);
+    echo $this->Form->hidden('idEtu',['value'=>$etudiant->id]);
 }
+$this->getRequest()->getSession()->write('personne',$array);
 $i=0;
 if ($nbetu==0){
     echo "<p>il n'y a pas d'élèves dans ce groupe</p>";
@@ -25,5 +25,6 @@ else{
         }
     }
 }
+
 echo $this->Form->end();
 ?>
