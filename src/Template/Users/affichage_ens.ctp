@@ -19,10 +19,16 @@ foreach ($subjects as $subject){
     echo $this->Form->button('Rendre Visible');
     echo $this->Form->end();
 
-    echo $this->Form->create($subject, ['url' => ['controller' => 'Groups', 'action' => 'add']]);
-    echo $this->Form->button('Ajouter Groupe');
-    echo $this->Form->end();
-    echo"<br>";
+    if($this->getRequest()->getSession()->read('Grouped')==0){
+        echo $this->Form->create($subject, ['url' => ['controller' => 'Groups', 'action' => 'add']]);
+        echo $this->Form->button('Ajouter Groupe');
+        echo $this->Form->end();
+        echo"<br>";
+    }else{
+        echo $this->Form->create($subject, ['url' => ['controller' => 'Groups', 'action' => 'add']]);
+        echo $this->Form->button('Modifier Groupe');
+        echo $this->Form->end();
+        echo"<br>";
+    }
 }
-/*s*/
 echo $this->Form->end();

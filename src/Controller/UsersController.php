@@ -79,13 +79,14 @@ class UsersController extends AppController
 
     public function affichageEns()
     {
-        $sessions = $this->Users->PtutSessions->find();
+        $sessions = $this->Users->Promotions->PtutSessions->find();
         $subjects = $this->Users->Subjects->find()->all();
         $arraydate = array();
 
         foreach ($sessions as $session) {
             array_push($arraydate, $session->date);
         }
+        //$this->getRequest()->getSession()->write('',);
         $this->set(compact('subjects', 'sessions'));
     }
 
@@ -119,13 +120,11 @@ class UsersController extends AppController
 
     public function verification()
     {
-        //dd($this->getRequest()->getData('Promotion1'));
         $users = $this->getRequest()->getSession()->read('personne');
-        //dd($users);
+
         $test = true;
         $i = 0;
         $j = $i + 1;
-        $n = $i;
         while ($i < $this->getRequest()->getSession()->read('nbetu') && ($test == true)) {
             while ($j < $this->getRequest()->getSession()->read('nbetu') && ($test == true)) {
                 if ($this->getRequest()->getData('Promotion' . $i) == $this->getRequest()->getData('Promotion' . $j)) {
@@ -136,27 +135,39 @@ class UsersController extends AppController
             $i = $i + 1;
             $j = $i + 1;
         }
-        //dd($test);
         $i = 0;
-        $j = 0;
+        $nbEtu=$this->getRequest()->getSession()->read('nbetu');
         if ($test == true) {
             //$this->Flash->success('Choix bien enregistré');
-            while ($i < $this->getRequest()->getSession()->read('nbetu')) {
-                $user = $this->Users->find()->contain(['Promotions'])->where(['id =' => $this->getRequest()->getData('idEtu' . $i)])->toArray();
-                dd($user);
+            while ($i < $nbEtu) {
+
+                $group=$this->Users->Groups->newEntity();
+                $users = $this->getRequest()->getSession()->read('personne');
+                $entities=$this->Users->find()->all();
+                $i=0;
+                foreach ($users as $user) {
+                    //$group->idNumSub= $this->getRequest()->getData('id);
+                    $group->Num=$nbEtu;
+                    foreach ($entities as $entity) {
+                        $nomEtu=$entity->firstName." ".$entity->lastName;
+                        $user=$this->Users->newEntity();
+                        if ($user==$nomEtu){
+                            $user->id=$entity->id;
+                            $user->firstName=$entity->firstName;
+                            $user->lastName=$entity->lastName;
+                            $user->userName=$entity->userName;
+                            $user->password=$entity->password;
+                            $user->mail=$entity->mail;
+                            //$user->numGroup= $group->id;
+
+                        }$this->Users->Groups->save($user);
+                    }
+
+                $i = $i + 1;
             }
-
-            if ($this->getRequest()->getData('Promotion' . $i) == $user[$j]) {
-                echo "oui";
-            }
-            $j = $j + 1;
-
-        $i = $i + 1;
-
-        dd($users);
-        //$this->Users->save($users);
+            $this->Users->Groups->save($group);
         return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
-        }else{
+        }}else{
             $this->Flash->error('Choix non enregistré, retour au choix');
             return $this->redirect(['controller' => 'Groups', 'action' => 'choix']);
         }

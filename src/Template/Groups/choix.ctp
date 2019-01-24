@@ -16,12 +16,14 @@ if ($nbetu==0){
     echo "<p>il n'y a pas d'élèves dans ce groupe</p>";
 }
 else{
-    echo "<legend>Veuillez indiquer le nom des ".$nbetu." élèves à insérer dans le groupe</legend>";
+    echo "<legend>Veuillez indiquer le nom des ".$nbetu." élèves à insérer dans le groupe:</legend><br>";
     while ($i<$nbetu){
+        echo "<p>Élève ".($i+1).":</p>";
         echo $this->Form->select('Promotion'.$i,$array);
         $i=$i+1;
         if ($i==$nbetu && $nbetu<>0){
             echo $this->Form->button('Valider');
+            $this->getRequest()->getSession()->write('Grouped',1);
         }
     }
 }

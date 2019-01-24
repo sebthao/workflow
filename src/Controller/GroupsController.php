@@ -26,12 +26,14 @@ class GroupsController extends AppController
         $nbetu=$this->getRequest()->getSession()->read('nbetu');
         $etudiants = $this->Groups->Users->find()->all();
         $array=array();
-        foreach ($etudiants as $etudiant){
-            $nomEtu=$etudiant->firstName." ".$etudiant->lastName;
-            $entity=$this->Groups->Users->find()->contain(['Roles'])->where(['id =' => $etudiant->id])->toArray();
-            $role=$entity[0]->roles[0]->id;
-            if ($role==3) {
-                array_push($array, $nomEtu);
+        $entities=$this->Groups->Users->find()->contain(['Roles'])->toArray();
+        //dd($entities);
+        foreach ($entities as $entity){
+            $nomEtu=$entity->firstName." ".$entity->lastName;
+            if ($entity->roles<>null) {
+                if ($entity->roles[0]->id == 3) {
+                    array_push($array, $nomEtu);
+                }
             }
         }
         $this->set(compact('etudiants','nbetu','array'));
