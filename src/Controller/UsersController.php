@@ -9,7 +9,6 @@
 namespace App\Controller;
 
 
-use App\Controller\SubjectsController;
 use App\Model\Entity\Sessions;
 
 class UsersController extends AppController
@@ -33,6 +32,7 @@ class UsersController extends AppController
             }
             $arrRole=array();
             foreach ($arrUser as $au){
+
                 foreach ($au->roles as $ar){
                     array_push($arrRole, $ar);
                 }
@@ -41,8 +41,12 @@ class UsersController extends AppController
             foreach ($query as $user){
                 $bool=true;
             }
+
             if($bool){
+
                 foreach ($arrRole as $aR){
+                    $this->getRequest()->getSession()->write('id', $q->id);
+
                     if($aR->id==1){
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
@@ -61,8 +65,6 @@ class UsersController extends AppController
 
     public function ptutsessionFinie(){
         $user = $this->Users->get($this->getRequest()->getSession()->read('id'));
-
-///////Obtenir l'id des Promo ou l'user appartient
         $idpromo = array();
         $quer = $this->Users
             ->find()
@@ -70,15 +72,12 @@ class UsersController extends AppController
             ->where(['id =' =>$user->id])
             ->toArray();
 
-
         foreach ($quer as $qu){
 
             foreach ($qu->promotions as $qp){
                 array_push($idpromo, $qp);
             }
         }
-
-///////////////////////Obtenir les sessions selon les id de promos/////////////////
 
         $sess =array();
         foreach ($idpromo as $idp){
@@ -93,8 +92,6 @@ class UsersController extends AppController
             }
         }
 
-
-////////////////////Obtenir le statuts selon l'id des sessions////////////////
         $stat =array();
         foreach ($sess as $s){
             $query2 = $this->Users->Promotions->Ptutsessions->Status
@@ -106,17 +103,7 @@ class UsersController extends AppController
             }
         }
 
-
-
-
-
-
-
-
-
-
         $this->set(compact('user', 'idpromo', 'sess', 'stat'));
-
     }
 
 
@@ -230,21 +217,32 @@ class UsersController extends AppController
     ////////////////////////////////////Enseignant////////////////////////////
 
     public function affichageEns(){
-        //dd($this->Users->Ptutsessions->get(0));
-        /*dd($this->Users->Sessions->find()
-            ->select('id', 'date_event')
-            ->where (['id ='=>2])
-            ->all()
-        );*/
-        //$sessions=$this->Users->Sessions->find();
-        $subjects=$this->Users->Subjects->find()->all();
-        /*$arraydate=array();
 
-        foreach ($sessions as $session){
-            array_push($arraydate,$session->date);
-       }
-       dd($arraydate);*/
-        $this->set(compact('subjects'/*,'sessions'*/));
+        $users=$this->Users->find()->contain(['Promotions'])->where(['id =' => $this->getRequest()->getSession()->read('id')])->toArray();
+        $promos=$users[0]->promotions;
+        $sessionpromo=$this->Users->newEntity();
+
+
+
+        $arraysessions=array();
+        $subjects=$this->Users->Subjects->find()->where(['idUserMentor = '=>$this->getRequest()->getSession()->read('id')])->toArray();
+        foreach($subjects as $subject){
+            $idpromo=$this->Users->Promotions->Ptutsessions->find()->select('promotion_id')->where(['id ='=> $subject->idSession])->toArray();
+            $idpromo=$idpromo[0];
+            $idpromo=$idpromo->promotion_id;
+            $subject->idpromo=$idpromo;
+        }
+        foreach ($promos as $promo){
+            $sessions=$this->Users->Promotions->Ptutsessions->find()->where(['promotion_id ='=> $promo->id])->toArray();
+            foreach ($sessions as $session) {
+                $sessionpromo=$this->Users->newEntity();
+                $sessionpromo->idsession=$session->id;
+                $sessionpromo->promo=$promo->title;
+                $sessionpromo->id=$promo->id;
+                array_push($arraysessions,$sessionpromo);
+            }
+        }
+        $this->set(compact('subjects','arraysessions'));
     }
 
     public function soumissionEns(){
@@ -259,8 +257,18 @@ class UsersController extends AppController
 
     public function affichageAdmin(){
         $users=$this->Users->find();
-        $sessions=$this->Users->Sessions->find()->all();
-        $this->set(compact('users','sessions'));
+
+        $promos=$this->Users->Promotions
+            ->find()
+            ->toArray();
+
+        $sessions=$this->Users->Promotions->Ptutsessions
+            ->find()
+            ->toArray();
+
+
+
+        $this->set(compact('users','sessions', 'promos'));
 
     }
 

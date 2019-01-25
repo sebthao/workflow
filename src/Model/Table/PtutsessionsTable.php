@@ -17,6 +17,8 @@ class PtutsessionsTable extends Table
         parent::initialize($config);
         $this->belongsTo('Promotions');
         $this->belongsTo('Status');
+        $this->hasMany('Phases');
+        $this->hasMany('Subjects');
 
     }
 
