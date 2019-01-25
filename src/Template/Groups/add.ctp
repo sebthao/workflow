@@ -2,6 +2,7 @@
 echo $this->Form->create($etudiants,['url'=>['controller'=>'Users','action'=>'affichageEns']]);
 echo $this->Form->button('Retour');
 echo $this->Form->end();
+
 $redirect=$this->Form->create($etudiants,['url'=>['controller'=>'Groups','action'=>'choix']]);
 echo "<legend>Combien voulez-vous mettre d'élèves dans ce Ptut?</legend><br>";
 echo $redirect;

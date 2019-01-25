@@ -14,19 +14,18 @@ class GroupsController extends AppController
 
     public function add()
     {
+        $this->getRequest()->getSession()->write('idSujet',$this->getRequest()->getData('idSujet'));
         $etudiants = $this->Groups->Users->find()->all();
         $this->set(compact('etudiants'));
     }
     public function choix()
     {
-        if(!empty($this->getRequest()->getData('number'))){
-            $this->getRequest()->getSession()->write('nbetu',$this->getRequest()->getData('number'));
-        }
+        $nombre=$this->getRequest()->getData('number');
+        $this->getRequest()->getSession()->write('nbetu',$nombre);
         $nbetu=$this->getRequest()->getSession()->read('nbetu');
         $etudiants = $this->Groups->Users->find()->all();
         $array=array();
         $entities=$this->Groups->Users->find()->contain(['Roles'])->toArray();
-        //dd($entities);
         foreach ($entities as $entity){
             $nomEtu=$entity->firstName." ".$entity->lastName;
             if ($entity->roles<>null) {
@@ -37,5 +36,6 @@ class GroupsController extends AppController
         }
         $this->set(compact('etudiants','nbetu','array'));
     }
+
 
 }

@@ -10,19 +10,32 @@ foreach ($etudiants as $etudiant){
 $this->getRequest()->getSession()->write('personne',$array);
 $i=0;
 if ($nbetu==0){
-    echo "<p>il n'y a pas d'élèves dans ce groupe</p>";
+    echo "<p>Il n'y a pas d'élève à rentrer dans le groupe</p><br>";
 }
 else{
-    echo "<legend>Veuillez indiquer le nom des ".$nbetu." élèves à insérer dans le groupe:</legend><br>";
-    while ($i<$nbetu){
-        echo "<p>Élève ".($i+1).":</p>";
-        echo $this->Form->select('Promotion'.$i,$array);
-        $i=$i+1;
-        if ($i==$nbetu && $nbetu<>0){
-            echo $this->Form->button('Valider');
-            $this->getRequest()->getSession()->write('Grouped',1);
+    if ($nbetu==1){
+        echo "<legend>Veuillez indiquer le nom de l'élève à insérer dans le groupe:</legend><br>";
+        while ($i<$nbetu){
+            echo "<p>Élève ".($i+1).":</p>";
+            echo $this->Form->select('Promotion'.$i,$array);
+            $i=$i+1;
+            if ($i==$nbetu && $nbetu<>0){
+                echo $this->Form->button('Valider');
+                $this->getRequest()->getSession()->write('Grouped',1);
+            }
         }
+    }else {
+        echo "<legend>Veuillez indiquer le nom des " . $nbetu . " élèves à insérer dans le groupe:</legend><br>";
+        while ($i < $nbetu) {
+            echo "<p>Élève " . ($i + 1) . ":</p>";
+            echo $this->Form->select('Promotion' . $i, $array);
+            $i = $i + 1;
+            if ($i == $nbetu && $nbetu <> 0) {
+                echo $this->Form->button('Valider');
+                $this->getRequest()->getSession()->write('Grouped', 1);
+            }
+        }
+        echo $this->Form->end();
     }
 }
-echo $this->Form->end();
 ?>

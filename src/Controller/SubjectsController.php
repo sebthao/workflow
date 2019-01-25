@@ -73,10 +73,10 @@ class SubjectsController extends AppController
 
     public function descriptionPtut(){
         $subjects=$this->Subjects->find()->all();
-        $idmentors=$this->Subjects->Users->find()
-            ->all();
+        $idSujet=$this->getRequest()->getData('idSujet');
+        $idmentors=$this->Subjects->Users->find()->all();
         foreach ($subjects as $subject) {
-            if ($subject->id == $this->getRequest()->getData('id')) {
+            if ($subject->id == $idSujet) {
                 foreach($idmentors as $idmentor){
                     if ($idmentor->id==$subject->idUserMentor){
                         $nomMentor= $idmentor->firstName." ".$idmentor->lastName;
@@ -84,7 +84,8 @@ class SubjectsController extends AppController
                     }
                 }
                 $this->set(compact('subject'));
-            } else {}
+
+            }
         }
     }
 
