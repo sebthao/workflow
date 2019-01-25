@@ -56,7 +56,7 @@ class SubjectsController extends AppController
     public function addSubject(){
         if(!empty($this->getRequest()->getData())){
             $subjects= $this->Subjects->newEntity();
-            $subjects->idSession = 1;
+            $subjects->idSession = $this->getRequest()->getSession()->read('idsession');
             $subjects->title =$this->getRequest()->getData('Titre') ;
             $subjects->description = $this->getRequest()->getData('Description');
             $subjects->idUserMentor = $this->getRequest()->getSession()->read('id');
@@ -66,7 +66,6 @@ class SubjectsController extends AppController
                 $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
             }else{
                 $this->Flash->error('erreur');
-                // $this->redirect(['url'=>['controller'=>'Users','action'=>'afficheEns']]);
             }
         }
         $this->redirect(['controller'=>'Users','action'=>'affichageEns']);
@@ -76,11 +75,9 @@ class SubjectsController extends AppController
         $subjects=$this->Subjects->find()->all();
         $idmentors=$this->Subjects->Users->find()
             ->all();
-        //dd($idmentors);
         foreach ($subjects as $subject) {
             if ($subject->id == $this->getRequest()->getData('id')) {
                 foreach($idmentors as $idmentor){
-                    //dd($idmentor);
                     if ($idmentor->id==$subject->idUserMentor){
                         $nomMentor= $idmentor->firstName." ".$idmentor->lastName;
                         $this->set(compact('nomMentor'));
@@ -89,7 +86,7 @@ class SubjectsController extends AppController
                 $this->set(compact('subject'));
             } else {}
         }
-    }/*un turc con*/
+    }
 
     public function setVisible(){
         

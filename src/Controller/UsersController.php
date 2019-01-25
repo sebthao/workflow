@@ -43,6 +43,7 @@ class UsersController extends AppController
             }
             if($bool){
                 foreach ($arrRole as $aR){
+                    $this->getRequest()->getSession()->write('id',$q->id);
                     if($aR->id==1){
                         return $this->redirect(['controller' => 'Users', 'action' => 'affichageAdmin']);
                     }
@@ -229,28 +230,87 @@ class UsersController extends AppController
 
     ////////////////////////////////////Enseignant////////////////////////////
 
-    public function affichageEns(){
-        //dd($this->Users->Ptutsessions->get(0));
-        /*dd($this->Users->Sessions->find()
-            ->select('id', 'date_event')
-            ->where (['id ='=>2])
-            ->all()
-        );*/
-        //$sessions=$this->Users->Sessions->find();
-        $subjects=$this->Users->Subjects->find()->all();
-        /*$arraydate=array();
 
-        foreach ($sessions as $session){
-            array_push($arraydate,$session->date);
-       }
-       dd($arraydate);*/
-        $this->set(compact('subjects'/*,'sessions'*/));
+    public function affichageEns(){
+        //$this->getRequest()->getData()->write('','oui');
+        $users=$this->Users->find()->contain(['Promotions'])->where(['id =' => $this->getRequest()->getSession()->read('id')])->toArray();
+        $promos=$users[0]->promotions;
+        $sessionpromo=$this->Users->newEntity();
+        $arraysessions=array();
+        $subjects=$this->Users->Subjects->find()->where(['idUserMentor = '=>$this->getRequest()->getSession()->read('id')])->toArray();
+        foreach($subjects as $subject){
+            $idpromo=$this->Users->Promotions->Ptutsessions->find()->select('promotion_id')->where(['id ='=> $subject->idSession])->toArray();
+            $idpromo=$idpromo[0];
+            $idpromo=$idpromo->promotion_id;
+            $subject->idpromo=$idpromo;
+        }
+        foreach ($promos as $promo){
+            $sessions=$this->Users->Promotions->Ptutsessions->find()->where(['promotion_id ='=> $promo->id])->toArray();
+            foreach ($sessions as $session) {
+                $sessionpromo=$this->Users->newEntity();
+                $sessionpromo->idsession=$session->id;
+                $sessionpromo->promo=$promo->title;
+                $sessionpromo->id=$promo->id;
+                array_push($arraysessions,$sessionpromo);
+            }
+        }
+        $this->set(compact('subjects','arraysessions'));
     }
 
     public function soumissionEns(){
-        $subjects=$this->Users->Subjects->newEntity();
+        $subjects = $this->Users->Subjects->newEntity();
+        $this->getRequest()->getSession()->write('idsession',$this->getRequest()->getData('idsession'));
         $this->set(compact('subjects'));
+    }
 
+    public function verification(){
+        $users = $this->getRequest()->getSession()->read('personne');
+        $test = true;
+        $i = 0;
+        $j = $i + 1;
+        while ($i < $this->getRequest()->getSession()->read('nbetu') && ($test == true)) {
+            while ($j < $this->getRequest()->getSession()->read('nbetu') && ($test == true)) {
+                if ($this->getRequest()->getData('Promotion' . $i) == $this->getRequest()->getData('Promotion' . $j)) {
+                    $test = false;
+                }
+                $j = $j + 1;
+            }
+            $i = $i + 1;
+            $j = $i + 1;
+        }
+        $i = 0;
+        $nbEtu=$this->getRequest()->getSession()->read('nbetu');
+        if ($test == true) {
+            $this->Flash->success('Choix bien enregistré');
+            while ($i < $nbEtu) {
+                $group=$this->Users->Groups->newEntity();
+                $users = $this->getRequest()->getSession()->read('personne');
+                $entities=$this->Users->find()->all();
+                $i=0;
+                foreach ($users as $user) {
+                    $group->idNumSub= $this->getRequest()->getData('idSujet');
+                    $group->Num=$nbEtu;
+                    foreach ($entities as $entity) {
+                        $nomEtu=$entity->firstName." ".$entity->lastName;
+                        $user=$this->Users->newEntity();
+                        if ($user==$nomEtu){
+                            $user->id=$entity->id;
+                            $user->firstName=$entity->firstName;
+                            $user->lastName=$entity->lastName;
+                            $user->userName=$entity->userName;
+                            $user->password=$entity->password;
+                            $user->mail=$entity->mail;
+                            $user->numGroup= $group->id;
+                        }$this->Users->Groups->save($user);
+                    }
+                    $i = $i + 1;
+                }
+                $this->Users->Groups->save($group);
+                return $this->redirect(['controller' => 'Users', 'action' => 'affichageEns']);
+            }}else{
+            $this->Flash->error('Choix non enregistré, veuillez mettre des élèves différents');
+            return $this->redirect(['controller' => 'Groups', 'action' => 'choix']);
+        }
     }
 
 
@@ -263,5 +323,9 @@ class UsersController extends AppController
         $this->set(compact('users','sessions'));
 
     }
+
+
+
+
 
 }
